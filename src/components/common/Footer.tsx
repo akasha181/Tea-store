@@ -57,7 +57,7 @@ export const Footer: React.FC = () => {
               </div>
               <div>
                 <h4 className="font-bold text-white text-sm">Easy Payment Modes</h4>
-                <p className="text-xs text-cream-200/80">Cash on Delivery, JazzCash, EasyPaisa</p>
+                <p className="text-xs text-cream-200/80">JazzCash &amp; EasyPaisa (جاز کیش اور ایزی پیسہ)</p>
               </div>
             </div>
           </div>

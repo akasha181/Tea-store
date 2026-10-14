@@ -217,15 +217,11 @@ export const PrintableOrderSummary: React.FC<PrintableOrderSummaryProps> = ({
               </p>
               <p className="font-semibold text-forest-900 print:text-black">
                 <strong>Payment Mode:</strong>{' '}
-                {order.customer.paymentMethod.toUpperCase()} (
-                {order.customer.paymentMethod === 'cod'
-                  ? 'Cash on Delivery'
-                  : order.customer.paymentMethod === 'jazzcash'
-                    ? 'JazzCash'
-                    : order.customer.paymentMethod === 'easypaisa'
-                      ? 'EasyPaisa'
-                      : 'Bank Transfer'}
-                )
+                {order.customer.paymentMethod === 'jazzcash'
+                  ? 'JazzCash Mobile Account (جاز کیش)'
+                  : order.customer.paymentMethod === 'easypaisa'
+                    ? 'EasyPaisa Mobile Account (ایزی پیسہ)'
+                    : order.customer.paymentMethod.toUpperCase()}
               </p>
               {order.customer.notes && (
                 <p className="p-2 rounded-lg bg-white border border-cream-300 text-[11px] text-forest-800 print:border-black">

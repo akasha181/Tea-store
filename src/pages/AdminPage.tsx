@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 import {
   ShieldCheck,
   ShoppingBag,
@@ -28,6 +28,7 @@ import {
   LayoutGrid,
   List,
   Image as ImageIcon,
+  Camera,
 } from 'lucide-react'
 import { Card } from '../components/ui/Card'
 import { Button } from '../components/ui/Button'
@@ -35,6 +36,7 @@ import { Badge } from '../components/ui/Badge'
 import { useProductCatalog } from '../context/useProductCatalog'
 import { useAdminAuth } from '../context/AdminAuthContext'
 import { CATEGORIES } from '../data/products'
+import { ProductImageGalleryModal } from '../components/admin/ProductImageGalleryModal'
 import {
   loadOrderHistory,
   updateOrderStatus,
@@ -87,6 +89,26 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigateHome, onNavigate
   const [editingProduct, setEditingProduct] = useState<Product | null>(null)
   const [productActionNotice, setProductActionNotice] = useState<string | null>(null)
   const [productViewMode, setProductViewMode] = useState<'table' | 'grid'>('table')
+  const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false)
+  const modalFileInputRef = useRef<HTMLInputElement>(null)
+
+  const handleModalImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    if (!file.type.startsWith('image/')) {
+      alert('براہ کرم تصویر والی فائل منتخب کریں (Please select a valid image file).')
+      return
+    }
+
+    const reader = new FileReader()
+    reader.onload = () => {
+      if (typeof reader.result === 'string') {
+        setProductForm((prev) => ({ ...prev, image: reader.result as string }))
+      }
+    }
+    reader.readAsDataURL(file)
+  }
 
   // New product form state
   const [productForm, setProductForm] = useState<Omit<Product, 'id'>>({
@@ -1576,111 +1598,94 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigateHome, onNavigate
                 </div>
               </div>
 
-              {/* Product Image URL with Live Preview */}
-              <div className="space-y-1.5 p-3 rounded-2xl bg-cream-50/80 border border-cream-300">
+              {/* Product Photo Selector: Gallery & Device Upload */}
+              <div className="space-y-3 p-4 rounded-3xl bg-cream-50/90 border border-cream-300">
                 <div className="flex items-center justify-between">
-                  <label className="block font-bold text-forest-950">
-                    Product Image (پروڈکٹ کی تصویر کا لنک)
-                  </label>
-                  <span className="text-[10px] text-forest-700/80">
-                    انٹرنیٹ سے کوئی بھی لنک یا ذیل سے منتخب کریں
-                  </span>
+                  <div>
+                    <label className="block font-black text-xs text-forest-950">
+                      Product Photo (پروڈکٹ کی تصویر)
+                    </label>
+                    <span className="text-[11px] text-forest-700/80">
+                      گیلری سے تصویر منتخب کریں یا اپنے موبائل/کمپیوٹر سے فوٹو لگائیں
+                    </span>
+                  </div>
+                  {productForm.image && (
+                    <Badge variant="forest" size="sm">
+                      ✓ تصویر منتخب ہے
+                    </Badge>
+                  )}
                 </div>
 
-                <div className="flex items-start gap-3">
-                  <div className="flex-1 space-y-2">
-                    <input
-                      type="url"
-                      value={productForm.image}
-                      onChange={(e) => setProductForm({ ...productForm, image: e.target.value })}
-                      placeholder="https://... or /images/products/..."
-                      className="w-full p-2.5 bg-white border border-cream-300 rounded-xl font-mono text-xs text-forest-950 placeholder:text-forest-900/40 focus:outline-none focus:ring-2 focus:ring-forest-600/20"
-                    />
+                {/* Hidden File Input for Device Gallery / Camera */}
+                <input
+                  ref={modalFileInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleModalImageUpload}
+                />
 
-                    {/* Quick Category Defaults / Presets */}
-                    <div className="flex flex-wrap items-center gap-1.5 text-[10px]">
-                      <span className="text-forest-700/80 font-bold">Quick Presets:</span>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setProductForm({
-                            ...productForm,
-                            image: '/images/products/beverages-tapal-danedar-tea-430g.jpg',
-                          })
-                        }
-                        className="px-2 py-0.5 bg-white hover:bg-cream-100 text-forest-900 rounded-md border border-cream-300 font-semibold cursor-pointer"
-                      >
-                        ☕ Tea (چائے)
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setProductForm({
-                            ...productForm,
-                            image: '/images/products/staples-sunridge-atta-10kg.jpg',
-                          })
-                        }
-                        className="px-2 py-0.5 bg-white hover:bg-cream-100 text-forest-900 rounded-md border border-cream-300 font-semibold cursor-pointer"
-                      >
-                        🌾 Flour (آٹا)
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setProductForm({
-                            ...productForm,
-                            image: '/images/products/pulses-super-basmati-rice-1kg.jpg',
-                          })
-                        }
-                        className="px-2 py-0.5 bg-white hover:bg-cream-100 text-forest-900 rounded-md border border-cream-300 font-semibold cursor-pointer"
-                      >
-                        🍚 Rice (چاول)
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setProductForm({
-                            ...productForm,
-                            image: '/images/products/cooking-dalda-banaspati-ghee-1kg.jpg',
-                          })
-                        }
-                        className="px-2 py-0.5 bg-white hover:bg-cream-100 text-forest-900 rounded-md border border-cream-300 font-semibold cursor-pointer"
-                      >
-                        🛢 Ghee (گھی)
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setProductForm({
-                            ...productForm,
-                            image: '/images/products/spices-national-red-chilli-200g.jpg',
-                          })
-                        }
-                        className="px-2 py-0.5 bg-white hover:bg-cream-100 text-forest-900 rounded-md border border-cream-300 font-semibold cursor-pointer"
-                      >
-                        🌶 Spices (مصالحہ)
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Live Thumbnail Preview */}
-                  <div className="w-18 h-18 rounded-2xl overflow-hidden bg-white border-2 border-dashed border-cream-300 shrink-0 flex items-center justify-center shadow-2xs">
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                  {/* Photo Preview Card */}
+                  <div className="relative w-28 h-28 rounded-2xl overflow-hidden bg-white border-2 border-forest-800/30 flex items-center justify-center shrink-0 shadow-xs group">
                     {productForm.image ? (
-                      <img
-                        src={productForm.image}
-                        alt="Preview"
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          ;(e.target as HTMLImageElement).src =
-                            '/images/products/beverages-tapal-danedar-tea-430g.jpg'
-                        }}
-                      />
+                      <>
+                        <img
+                          src={productForm.image}
+                          alt="Product Preview"
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            ;(e.target as HTMLImageElement).src =
+                              '/images/products/beverages-tapal-danedar-tea-430g.jpg'
+                          }}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setProductForm({ ...productForm, image: '' })}
+                          className="absolute top-1 right-1 bg-forest-950/80 hover:bg-rose-700 text-white p-1 rounded-lg text-[10px] cursor-pointer transition-colors shadow-2xs"
+                          title="تصویر ہٹائیں (Remove Photo)"
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </button>
+                      </>
                     ) : (
-                      <div className="text-center p-1 text-forest-700/50">
-                        <ImageIcon className="w-5 h-5 mx-auto mb-0.5" />
-                        <span className="text-[9px] font-bold block leading-tight">No Image</span>
+                      <div className="text-center p-2 text-forest-700/60">
+                        <ImageIcon className="w-8 h-8 mx-auto mb-1 stroke-1 text-forest-600" />
+                        <span className="text-[10px] font-bold block leading-tight text-forest-900">
+                          کوئی تصویر نہیں
+                        </span>
+                        <span className="text-[9px] text-forest-700/60 block">گیلری سے چنیں</span>
                       </div>
                     )}
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex-1 space-y-2 w-full">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {/* Button 1: Browse Store Gallery */}
+                      <button
+                        type="button"
+                        onClick={() => setIsGalleryModalOpen(true)}
+                        className="flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-forest-950 hover:bg-forest-900 text-white font-bold text-xs cursor-pointer shadow-2xs transition-all"
+                      >
+                        <ImageIcon className="w-4 h-4 text-lime-brand" />
+                        <span>اسٹور گیلری سے منتخب کریں</span>
+                      </button>
+
+                      {/* Button 2: Upload from Device */}
+                      <button
+                        type="button"
+                        onClick={() => modalFileInputRef.current?.click()}
+                        className="flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-lime-brand hover:bg-lime-accent active:bg-lime-dark text-forest-950 font-black text-xs cursor-pointer shadow-2xs transition-all"
+                      >
+                        <Camera className="w-4 h-4 text-forest-950" />
+                        <span>موبائل / کمپیوٹر گیلری</span>
+                      </button>
+                    </div>
+
+                    <p className="text-[10px] text-forest-700/80 leading-relaxed font-medium">
+                      💡 <strong>کوئی لنک ٹائپ کرنے کی ضرورت نہیں!</strong> اسٹور کی تمام آئٹمز کی اصل تصاویر گیلری میں موجود ہیں، یا اپنے فون کے کیمرہ/گیلری سے نئی تصویر اپلوڈ کر سکتے ہیں۔
+                    </p>
                   </div>
                 </div>
               </div>
@@ -1741,6 +1746,16 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigateHome, onNavigate
         order={activePrintOrder}
         isOpen={Boolean(activePrintOrder)}
         onClose={() => setActivePrintOrder(null)}
+      />
+
+      {/* 9. PRODUCT IMAGE GALLERY MODAL */}
+      <ProductImageGalleryModal
+        isOpen={isGalleryModalOpen}
+        onClose={() => setIsGalleryModalOpen(false)}
+        onSelectImage={(selectedImg) => {
+          setProductForm((prev) => ({ ...prev, image: selectedImg }))
+        }}
+        currentImage={productForm.image}
       />
     </div>
   )

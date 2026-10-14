@@ -605,9 +605,12 @@ export const OrdersPage: React.FC<OrdersPageProps> = ({
                         <div className="flex items-center gap-2 pt-1 text-[11px] text-forest-700/80">
                           <CreditCard className="w-3 h-3 text-forest-700" />
                           <span>
-                            <strong>Payment:</strong> {order.customer.paymentMethod.toUpperCase()} (
-                            {order.customer.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Digital / IBFT'}
-                            )
+                            <strong>Payment:</strong>{' '}
+                            {order.customer.paymentMethod === 'jazzcash'
+                              ? 'JazzCash (جاز کیش)'
+                              : order.customer.paymentMethod === 'easypaisa'
+                                ? 'EasyPaisa (ایزی پیسہ)'
+                                : order.customer.paymentMethod.toUpperCase()}
                           </span>
                         </div>
 

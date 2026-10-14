@@ -705,65 +705,58 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                   </h2>
                 </div>
                 <span className="text-xs text-emerald-800 font-bold">
-                  Pay Upon Delivery / Collection
+                  EasyPaisa &amp; JazzCash Only (صرف ڈیجیٹل ادائیگی)
                 </span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {[
                   {
-                    id: 'cod' as PaymentMethod,
-                    title: 'Cash on Delivery (COD)',
-                    urdu: 'نقدی کی ادائیگی',
-                    desc: 'Pay cash to the rider or at store counter',
-                    badge: 'Most Popular',
+                    id: 'easypaisa' as PaymentMethod,
+                    title: 'EasyPaisa Mobile Account',
+                    urdu: 'ایزی پیسہ اکاؤنٹ',
+                    desc: `Direct payment to store counter: ${STORE_INFO.phone}`,
+                    badge: 'EasyPaisa Verified',
+                    accentColor: 'border-emerald-600 bg-emerald-50/70',
                   },
                   {
                     id: 'jazzcash' as PaymentMethod,
                     title: 'JazzCash Mobile Account',
                     urdu: 'جاز کیش اکاؤنٹ',
-                    desc: 'Send to store merchant account on delivery',
-                    badge: 'Instant QR',
-                  },
-                  {
-                    id: 'easypaisa' as PaymentMethod,
-                    title: 'EasyPaisa Mobile Account',
-                    urdu: 'ایزی پیسہ اکاؤنٹ',
-                    desc: `Direct payment to ${STORE_INFO.phone}`,
-                    badge: 'Instant',
-                  },
-                  {
-                    id: 'bank_transfer' as PaymentMethod,
-                    title: 'Direct Bank Transfer',
-                    urdu: 'بینک ٹرانسفر',
-                    desc: 'Online IBFT transfer with screenshot confirmation',
-                    badge: 'IBFT',
+                    desc: `Direct payment to store counter: ${STORE_INFO.phone}`,
+                    badge: 'JazzCash Verified',
+                    accentColor: 'border-amber-600 bg-amber-50/70',
                   },
                 ].map((option) => (
                   <button
                     key={option.id}
                     type="button"
                     onClick={() => handleFieldChange('paymentMethod', option.id)}
-                    className={`p-3.5 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between gap-2 ${
+                    className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between gap-3 ${
                       formData.paymentMethod === option.id
-                        ? 'border-forest-700 bg-forest-50/80 shadow-xs'
+                        ? `${option.accentColor} shadow-forest-xs ring-2 ring-forest-700/20`
                         : 'border-cream-300 bg-white hover:border-cream-400'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <CreditCard className="w-4 h-4 text-forest-700" />
+                      <div className="flex items-center gap-2">
+                        <CreditCard className="w-4 h-4 text-forest-800" />
+                        <span className="text-xs font-bold text-forest-950">
+                          {option.id === 'easypaisa' ? '🟢 EasyPaisa' : '🔴 JazzCash'}
+                        </span>
+                      </div>
                       <Badge variant={formData.paymentMethod === option.id ? 'forest' : 'cream'} size="sm">
                         {option.badge}
                       </Badge>
                     </div>
                     <div>
-                      <h4 className="font-bold text-xs text-forest-950">
+                      <h4 className="font-black text-sm text-forest-950">
                         {option.title}
                       </h4>
-                      <p className="text-[11px] font-urdu font-medium text-forest-700">
+                      <p className="text-xs font-urdu font-bold text-forest-700">
                         {option.urdu}
                       </p>
-                      <p className="text-[10px] text-forest-700/70 mt-0.5">
+                      <p className="text-[11px] text-forest-700/80 mt-1 font-mono">
                         {option.desc}
                       </p>
                     </div>
@@ -994,7 +987,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 <Trash2 className="w-3 h-3" />
                 <span>Clear Cart</span>
               </button>
-              <span>Cash / JazzCash / EasyPaisa</span>
+              <span>EasyPaisa / JazzCash (ایزی پیسہ یا جاز کیش)</span>
             </div>
           </Card>
 

@@ -3,22 +3,32 @@ import { INITIAL_PRODUCTS } from '../data/products'
 import type { Product } from '../types'
 import { ProductCatalogContext } from './catalogContext'
 
-const CATALOG_STORAGE_KEY = 'hafiz_g_catalog_v6'
+const CATALOG_STORAGE_KEY = 'hafiz_g_catalog_v7'
 
 function loadSavedCatalog(): Product[] {
   if (typeof window === 'undefined') return INITIAL_PRODUCTS
   try {
-    const raw = localStorage.getItem(CATALOG_STORAGE_KEY)
+    let raw = localStorage.getItem(CATALOG_STORAGE_KEY)
+    if (!raw) {
+      raw = localStorage.getItem('hafiz_g_catalog_v6')
+    }
     if (!raw) return INITIAL_PRODUCTS
     const parsed = JSON.parse(raw)
     if (Array.isArray(parsed) && parsed.length > 0) {
-      return parsed.map((item: Product) => {
+      // 1. Map existing saved products, ensuring images are filled
+      const mapped = parsed.map((item: Product) => {
         const initialMatch = INITIAL_PRODUCTS.find((p) => p.id === item.id)
         if (initialMatch && (!item.image || item.image.trim() === '')) {
           return { ...item, image: initialMatch.image }
         }
         return item
       })
+
+      // 2. Guarantee that every product currently in INITIAL_PRODUCTS is in the catalog
+      const existingIds = new Set(mapped.map((p) => p.id))
+      const missingInitial = INITIAL_PRODUCTS.filter((p) => !existingIds.has(p.id))
+
+      return [...mapped, ...missingInitial]
     }
     return INITIAL_PRODUCTS
   } catch {

@@ -381,8 +381,8 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onNavigateToCheckout }) 
                     </button>
                   )}
 
-                  <span className="font-medium text-forest-700">
-                    Cash on Delivery / JazzCash / EasyPaisa
+                  <span className="font-bold text-forest-800">
+                    JazzCash / EasyPaisa (صرف جاز کیش یا ایزی پیسہ)
                   </span>
                 </div>
               </div>

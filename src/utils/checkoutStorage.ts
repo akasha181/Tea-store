@@ -12,7 +12,7 @@ export const DEFAULT_CUSTOMER_DETAILS: CustomerDetails = {
   address: '',
   area: 'Civil Bazaar / K-152 Vicinity',
   notes: '',
-  paymentMethod: 'cod',
+  paymentMethod: 'easypaisa',
   saveDetails: true,
 }
 
@@ -35,9 +35,7 @@ export function loadSavedCustomerDetails(): CustomerDetails {
       area: typeof parsed.area === 'string' ? parsed.area : 'Civil Bazaar / K-152 Vicinity',
       notes: typeof parsed.notes === 'string' ? parsed.notes : '',
       paymentMethod:
-        ['cod', 'jazzcash', 'easypaisa', 'bank_transfer'].includes(parsed.paymentMethod)
-          ? parsed.paymentMethod
-          : 'cod',
+        parsed.paymentMethod === 'jazzcash' ? 'jazzcash' : 'easypaisa',
       saveDetails: typeof parsed.saveDetails === 'boolean' ? parsed.saveDetails : true,
     }
   } catch {
@@ -304,7 +302,7 @@ export function seedSampleOrdersIfEmpty(): OrderRecord[] {
         address: 'Plaza 4, Main Saddar Road, Rawalpindi',
         area: 'Saddar / Cantt',
         notes: 'Delivered successfully.',
-        paymentMethod: 'cod',
+        paymentMethod: 'easypaisa',
       },
       items: [
         {
