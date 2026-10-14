@@ -73,7 +73,7 @@ export const Hero3DSection: React.FC<Hero3DSectionProps> = ({ onExploreClick }) 
           {/* Call to Actions */}
           <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 pt-2">
             <a
-              href={`https://wa.me/${STORE_INFO.whatsapp}?text=Assalam-o-Alaikum%20Hafiz%20G,%20I%20want%20to%20order%20groceries%20from%20G%20Civil%20Bazaar,%20K-152`}
+              href={`https://wa.me/${STORE_INFO.whatsapp}?text=Assalam-o-Alaikum%20Hafiz%20G,%20I%20want%20to%20order%20groceries%20from%20Civil%20Bazar%20K-152,%20Attock%20City`}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-lime-brand hover:bg-lime-accent active:bg-lime-dark text-forest-950 font-bold px-5 py-3.5 rounded-xl text-xs sm:text-sm shadow-sm transition-all cursor-pointer motion-reduce:transition-none"

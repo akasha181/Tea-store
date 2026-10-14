@@ -4,13 +4,13 @@ export const STORE_INFO: StoreInfo = {
   name: 'Hafiz G Chai and Karyana Store',
   urduName: 'حافظ جی چائے اور کریانہ سٹور',
   tagline: 'خالص چائے اور معیاری کریانہ • آپ کے گھر تک سامان ہماری ذمہ داری',
-  address: 'G Civil Bazaar, K-152',
+  address: 'Civil Bazar K-152, Attock City',
   phone: (import.meta.env?.VITE_STORE_PHONE as string) || '0312-1971001',
   whatsapp: (import.meta.env?.VITE_STORE_WHATSAPP as string) || '923121971001',
   timing: '8:00 AM – 11:00 PM (Daily)',
   deliveryNotice: '30–45 Mins Local Doorstep Delivery (Minimum Delivery Fee: Rs. 200)',
   samplePriceDisclaimer:
-    'All prices are sample retail estimates in PKR subject to daily mandi rate verification by Hafiz G Chai and Karyana Store owner (G Civil Bazaar, K-152). Final order price confirmed upon delivery.',
+    'All prices are sample retail estimates in PKR subject to daily mandi rate verification by Hafiz G Chai and Karyana Store owner (Civil Bazar K-152, Attock City). Final order price confirmed upon delivery.',
 }
 
 export const CATEGORIES: (Category & {
@@ -504,10 +504,10 @@ export const STORE_PROMOTIONS: PromotionItem[] = [
     id: 'promo-delivery',
     title: 'Fast Express Doorstep Delivery',
     urduTitle: 'فوری ہوم ڈیلیوری',
-    tagline: 'Delivered in 30–45 mins within G Civil Bazaar & surroundings',
+    tagline: 'Delivered in 30–45 mins within Civil Bazar, K-152 Attock City & surroundings',
     tag: 'Neighborhood Service',
     highlight: 'Standard Delivery: Rs. 200',
-    description: 'Place your grocery order online or on WhatsApp and our rider delivers directly to your door at G Civil Bazaar, K-152 (Minimum Delivery Fee: Rs. 200).',
+    description: 'Place your grocery order online or on WhatsApp and our rider delivers directly to your door at Civil Bazar K-152, Attock City (Minimum Delivery Fee: Rs. 200).',
     whatsAppPrompt: 'Assalam-o-Alaikum Hafiz G, I would like to order groceries with home delivery (Rs. 200 delivery fee) to my address.',
     bgGradient: 'from-forest-900 via-forest-800 to-forest-950',
     accentColor: 'text-lime-brand',

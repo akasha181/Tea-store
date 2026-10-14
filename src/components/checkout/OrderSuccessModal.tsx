@@ -115,7 +115,7 @@ export const OrderSuccessModal: React.FC<OrderSuccessModalProps> = ({
             <span className="text-cream-200">Fulfillment:</span>
             <span className="font-bold text-lime-brand">
               {order.customer.deliveryMethod === 'pickup'
-                ? 'Store Pickup (K-152)'
+                ? 'Store Pickup (Civil Bazar K-152, Attock City)'
                 : 'Home Delivery'}
             </span>
           </div>

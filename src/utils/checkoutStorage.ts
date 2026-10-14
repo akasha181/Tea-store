@@ -3,14 +3,14 @@ import { STORE_INFO } from '../data/products'
 
 const CUSTOMER_INFO_STORAGE_KEY = 'hafiz_jee_customer_info_v1'
 const ORDER_HISTORY_STORAGE_KEY = 'hafiz_jee_order_history_v1'
-const STORE_SETTINGS_STORAGE_KEY = 'hafiz_g_store_settings_v2'
+const STORE_SETTINGS_STORAGE_KEY = 'hafiz_g_store_settings_v3'
 
 export const DEFAULT_CUSTOMER_DETAILS: CustomerDetails = {
   fullName: '',
   phoneNumber: '',
   deliveryMethod: 'delivery',
   address: '',
-  area: 'Civil Bazaar / K-152 Vicinity',
+  area: 'Civil Bazar / K-152, Attock City',
   notes: '',
   paymentMethod: 'easypaisa',
   saveDetails: true,
@@ -32,7 +32,7 @@ export function loadSavedCustomerDetails(): CustomerDetails {
       phoneNumber: typeof parsed.phoneNumber === 'string' ? parsed.phoneNumber : '',
       deliveryMethod: parsed.deliveryMethod === 'pickup' ? 'pickup' : 'delivery',
       address: typeof parsed.address === 'string' ? parsed.address : '',
-      area: typeof parsed.area === 'string' ? parsed.area : 'Civil Bazaar / K-152 Vicinity',
+      area: typeof parsed.area === 'string' ? parsed.area : 'Civil Bazar / K-152, Attock City',
       notes: typeof parsed.notes === 'string' ? parsed.notes : '',
       paymentMethod:
         parsed.paymentMethod === 'jazzcash' ? 'jazzcash' : 'easypaisa',
@@ -201,10 +201,10 @@ export function seedSampleOrdersIfEmpty(): OrderRecord[] {
         fullName: 'Haji Muhammad Farooq',
         phoneNumber: '0300-5551234',
         deliveryMethod: 'delivery',
-        address: 'House # 12, Street 3, G Civil Bazaar',
-        area: 'Civil Bazaar / K-152 Vicinity',
-        notes: 'Please pack atta in strong bag. Cash ready.',
-        paymentMethod: 'cod',
+        address: 'House # 12, Street 3, Civil Bazar, Attock City',
+        area: 'Civil Bazar / K-152, Attock City',
+        notes: 'Please pack atta in strong bag. Payment ready.',
+        paymentMethod: 'easypaisa',
       },
       items: [
         {
@@ -250,8 +250,8 @@ export function seedSampleOrdersIfEmpty(): OrderRecord[] {
         fullName: 'Zainab Bibi',
         phoneNumber: '0312-9876543',
         deliveryMethod: 'pickup',
-        address: 'G Civil Bazaar, K-152 Counter',
-        area: 'Civil Bazaar / K-152 Vicinity',
+        address: 'Civil Bazar K-152, Attock City Counter',
+        area: 'Civil Bazar / K-152, Attock City',
         notes: 'Will pick up after Asr prayer.',
         paymentMethod: 'jazzcash',
       },
@@ -372,6 +372,9 @@ export function loadStoreSettings(): StoreInfo {
     }
     if (merged.phone === '0300-1234567') {
       merged.phone = STORE_INFO.phone
+    }
+    if (!merged.address || merged.address.includes('G Civil Bazaar')) {
+      merged.address = STORE_INFO.address
     }
     return merged
   } catch {

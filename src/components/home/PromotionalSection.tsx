@@ -46,7 +46,7 @@ export const PromotionalSection: React.FC = () => {
 
         <div className="flex items-center gap-1.5 text-xs text-forest-700 font-medium">
           <MapPin className="w-3.5 h-3.5 text-lime-dark" />
-          <span>Serving G Civil Bazaar, K-152</span>
+          <span>Serving Civil Bazar K-152, Attock City</span>
         </div>
       </div>
 

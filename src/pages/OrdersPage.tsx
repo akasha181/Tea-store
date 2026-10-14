@@ -586,7 +586,7 @@ export const OrdersPage: React.FC<OrdersPageProps> = ({
                           {isPickup ? (
                             <>
                               <Store className="w-3.5 h-3.5 text-lime-dark" />
-                              <span>Store Counter Pickup (G Civil Bazaar, K-152)</span>
+                              <span>Store Counter Pickup (Civil Bazar K-152, Attock City)</span>
                             </>
                           ) : (
                             <>

@@ -48,14 +48,14 @@ export interface CheckoutPageProps {
 }
 
 const LOCAL_AREAS = [
-  'Civil Bazaar / K-152 Vicinity',
-  'Saddar / Cantt',
-  'Raja Bazaar / City Area',
-  'Murree Road / Committee Chowk',
-  'Commercial Market / Satellite Town',
-  'Westridge / Peshawar Road',
-  'Adyala Road / Bahria Vicinity',
-  'Other Rawalpindi Area',
+  'Civil Bazar / K-152, Attock City',
+  'Civil Lines, Attock',
+  'Kamra Road, Attock',
+  'People\'s Colony, Attock',
+  'Dar-ul-Islam Colony, Attock',
+  'Mehmoodabad, Attock',
+  'Saddar Bazar, Attock',
+  'Other Attock City Area',
 ]
 
 const getCategoryArtwork = (category: string) => {
@@ -646,7 +646,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                         value={formData.address}
                         onChange={(e) => handleFieldChange('address', e.target.value)}
                         onBlur={() => handleBlur('address')}
-                        placeholder="House / Flat No., Street No., Nearest Landmark (e.g. Near Madina Masjid, Civil Bazaar)"
+                        placeholder="House / Flat No., Street No., Nearest Landmark (e.g. Near Madina Masjid, Civil Bazar, Attock City)"
                         className={`w-full px-3.5 py-2.5 rounded-xl border text-sm bg-white placeholder:text-forest-900/30 focus:outline-none focus:ring-2 transition-all ${
                           addressError
                             ? 'border-rose-400 focus:ring-rose-300'
@@ -787,7 +787,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 <MapPin className="w-5 h-5 text-forest-700 shrink-0" />
                 <div>
                   <p className="font-bold">Physical Counter</p>
-                  <p className="text-[11px] text-forest-700/70">G Civil Bazaar, K-152</p>
+                  <p className="text-[11px] text-forest-700/70">Civil Bazar K-152, Attock City</p>
                 </div>
               </div>
             </div>

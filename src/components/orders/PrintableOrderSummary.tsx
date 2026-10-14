@@ -212,7 +212,7 @@ export const PrintableOrderSummary: React.FC<PrintableOrderSummaryProps> = ({
               <p className="font-semibold text-forest-900 print:text-black">
                 <strong>Fulfillment:</strong>{' '}
                 {isPickup
-                  ? '🏬 Store Counter Pickup (G Civil Bazaar, K-152)'
+                  ? '🏬 Store Counter Pickup (Civil Bazar K-152, Attock City)'
                   : '🚚 Home Doorstep Delivery'}
               </p>
               <p className="font-semibold text-forest-900 print:text-black">

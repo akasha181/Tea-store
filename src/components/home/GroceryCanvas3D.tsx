@@ -433,7 +433,7 @@ export const GroceryCanvas3D: React.FC<GroceryCanvas3DProps> = ({ className = ''
           </div>
           <h4 className="font-bold text-forest-900 text-sm">Hafiz G 3D Store</h4>
           <p className="text-xs text-forest-700/70 mt-1">
-            G Civil Bazaar, K-152 • Fresh Chakki Atta & Pure Chai
+            Civil Bazar K-152, Attock City • Fresh Chakki Atta & Pure Chai
           </p>
         </div>
       </div>

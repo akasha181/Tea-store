@@ -31,7 +31,7 @@ export function buildWhatsAppOrderMessage(payload: WhatsAppOrderPayload): string
 
   const deliveryMethodLabel =
     customer.deliveryMethod === 'pickup'
-      ? '🏬 Store Pickup (دکان سے وصولی - G Civil Bazaar, K-152)'
+      ? '🏬 Store Pickup (دکان سے وصولی - Civil Bazar K-152, Attock City)'
       : '🚚 Home Delivery (گھر پر ترسیل)'
 
   const paymentMethodLabel = {
