@@ -20,11 +20,13 @@ import {
   PlusCircle,
   Copy,
   Check,
+  Lock,
 } from 'lucide-react'
 import { Card } from '../components/ui/Card'
 import { Button } from '../components/ui/Button'
 import { PrintableOrderSummary } from '../components/orders/PrintableOrderSummary'
 import { STORE_INFO } from '../data/products'
+import { useAdminAuth } from '../context/AdminAuthContext'
 import {
   loadOrderHistory,
   updateOrderStatus,
@@ -45,6 +47,7 @@ export const OrdersPage: React.FC<OrdersPageProps> = ({
   onNavigateToCheckout,
   initialActiveOrderId,
 }) => {
+  const { logout } = useAdminAuth()
   const [orders, setOrders] = useState<OrderRecord[]>(() => {
     const list = loadOrderHistory()
     if (list.length === 0) {
@@ -255,6 +258,19 @@ export const OrdersPage: React.FC<OrdersPageProps> = ({
             iconLeft={<ArrowLeft className="w-4 h-4" />}
           >
             Back to Groceries (واپس جائیں)
+          </Button>
+
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              logout()
+              onNavigateHome()
+            }}
+            className="border-rose-300 text-rose-800 hover:bg-rose-50 hover:border-rose-400"
+            iconLeft={<Lock className="w-4 h-4 text-rose-600" />}
+          >
+            Lock &amp; Logout (لاگ آؤٹ)
           </Button>
 
           {onNavigateToCheckout && (

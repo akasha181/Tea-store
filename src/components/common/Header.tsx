@@ -12,10 +12,12 @@ import {
   Sparkles,
   FileText,
   ShieldCheck,
+  Lock,
 } from 'lucide-react'
 import { Badge } from '../ui/Badge'
 import { Button } from '../ui/Button'
 import { STORE_INFO } from '../../data/products'
+import { useAdminAuth } from '../../context/AdminAuthContext'
 
 export interface HeaderProps {
   cartCount?: number
@@ -52,6 +54,7 @@ export const Header: React.FC<HeaderProps> = ({
   currentPage = 'home',
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const { isAuthenticated, logout } = useAdminAuth()
 
   const handleAisleClick = (id: string) => {
     if (currentPage !== 'home') {
@@ -94,9 +97,13 @@ export const Header: React.FC<HeaderProps> = ({
                   ? 'bg-lime-brand text-forest-950 shadow-2xs'
                   : 'text-cream-100 hover:text-lime-brand bg-forest-900 border border-forest-800 hover:border-forest-700'
               }`}
-              title="Track orders and view customer dashboard"
+              title="Protected: Orders management (Requires password: obaid12345)"
             >
-              <FileText className="w-3.5 h-3.5 text-lime-brand" />
+              {isAuthenticated ? (
+                <FileText className="w-3.5 h-3.5 text-lime-brand" />
+              ) : (
+                <Lock className="w-3 h-3 text-amber-400" />
+              )}
               <span>Orders (آرڈرز)</span>
             </button>
 
@@ -108,11 +115,30 @@ export const Header: React.FC<HeaderProps> = ({
                   ? 'bg-amber-400 text-forest-950 shadow-2xs'
                   : 'text-amber-200 hover:text-white bg-forest-900 border border-amber-500/40 hover:border-amber-400'
               }`}
-              title="Admin Control Panel & Order Management"
+              title="Protected: Admin Portal (Requires password: obaid12345)"
             >
-              <ShieldCheck className="w-3.5 h-3.5 text-amber-300" />
+              {isAuthenticated ? (
+                <ShieldCheck className="w-3.5 h-3.5 text-amber-300" />
+              ) : (
+                <Lock className="w-3 h-3 text-amber-400" />
+              )}
               <span>Admin Portal (ایڈمن)</span>
             </button>
+
+            {isAuthenticated && (
+              <button
+                type="button"
+                onClick={() => {
+                  logout()
+                  onLogoClick?.()
+                }}
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold bg-rose-950 text-rose-200 hover:bg-rose-900 border border-rose-800 transition-colors cursor-pointer"
+                title="Lock portal and logout session"
+              >
+                <Lock className="w-3 h-3 text-rose-300" />
+                <span>Logout (لاگ آؤٹ)</span>
+              </button>
+            )}
 
             <a
               href={`tel:${STORE_INFO.phone}`}
@@ -363,8 +389,12 @@ export const Header: React.FC<HeaderProps> = ({
                 }}
                 className="w-full inline-flex items-center justify-center gap-2 bg-cream-100 hover:bg-cream-200 text-forest-950 font-bold py-2.5 rounded-xl text-xs border border-cream-300 shadow-2xs"
               >
-                <FileText className="w-4 h-4 text-forest-700" />
-                <span>Orders &amp; Tracking (کسٹمر آرڈرز)</span>
+                {isAuthenticated ? (
+                  <FileText className="w-4 h-4 text-forest-700" />
+                ) : (
+                  <Lock className="w-3.5 h-3.5 text-amber-700" />
+                )}
+                <span>Orders Management (آرڈرز)</span>
               </button>
 
               <button
@@ -375,9 +405,28 @@ export const Header: React.FC<HeaderProps> = ({
                 }}
                 className="w-full inline-flex items-center justify-center gap-2 bg-amber-100 hover:bg-amber-200 text-forest-950 font-bold py-2.5 rounded-xl text-xs border border-amber-300 shadow-2xs"
               >
-                <ShieldCheck className="w-4 h-4 text-amber-700" />
-                <span>Admin Portal (ایڈمن پینل)</span>
+                {isAuthenticated ? (
+                  <ShieldCheck className="w-4 h-4 text-amber-700" />
+                ) : (
+                  <Lock className="w-3.5 h-3.5 text-amber-700" />
+                )}
+                <span>Admin Portal (ایڈمن پورٹل)</span>
               </button>
+
+              {isAuthenticated && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false)
+                    logout()
+                    onLogoClick?.()
+                  }}
+                  className="w-full inline-flex items-center justify-center gap-2 bg-rose-100 hover:bg-rose-200 text-rose-950 font-bold py-2.5 rounded-xl text-xs border border-rose-300 shadow-2xs"
+                >
+                  <Lock className="w-4 h-4 text-rose-700" />
+                  <span>Lock Session / Logout (لاگ آؤٹ)</span>
+                </button>
+              )}
 
               <a
                 href={`https://wa.me/${STORE_INFO.whatsapp}?text=Assalam-o-Alaikum%20Hafiz%20Jee`}

@@ -1,6 +1,8 @@
 import { useState, useEffect, lazy, Suspense } from 'react'
 import { ProductCatalogProvider } from './context/ProductCatalogContext'
 import { CartProvider } from './context/CartContext'
+import { AdminAuthProvider } from './context/AdminAuthContext'
+import { AdminAuthGate } from './components/auth/AdminAuthGate'
 import { useCart } from './context/useCart'
 import { Layout } from './components/layout/Layout'
 import { HomePage } from './pages/HomePage'
@@ -137,10 +139,12 @@ function AppContent() {
     >
       <Suspense fallback={<PageLoadingFallback />}>
         {currentPage === 'admin' ? (
-          <AdminPage
-            onNavigateHome={navigateHome}
-            onNavigateToOrders={navigateToOrders}
-          />
+          <AdminAuthGate onNavigateHome={navigateHome} targetTitle="Admin Portal">
+            <AdminPage
+              onNavigateHome={navigateHome}
+              onNavigateToOrders={navigateToOrders}
+            />
+          </AdminAuthGate>
         ) : currentPage === 'checkout' ? (
           <CheckoutPage
             onNavigateHome={navigateHome}
@@ -148,11 +152,13 @@ function AppContent() {
             onNavigateToOrders={navigateToOrders}
           />
         ) : currentPage === 'orders' ? (
-          <OrdersPage
-            onNavigateHome={navigateHome}
-            onNavigateToCheckout={navigateToCheckout}
-            initialActiveOrderId={activeOrderId}
-          />
+          <AdminAuthGate onNavigateHome={navigateHome} targetTitle="Orders Management">
+            <OrdersPage
+              onNavigateHome={navigateHome}
+              onNavigateToCheckout={navigateToCheckout}
+              initialActiveOrderId={activeOrderId}
+            />
+          </AdminAuthGate>
         ) : (
           <HomePage
             onAddToCart={addToCart}
@@ -171,7 +177,9 @@ function App() {
   return (
     <ProductCatalogProvider>
       <CartProvider>
-        <AppContent />
+        <AdminAuthProvider>
+          <AppContent />
+        </AdminAuthProvider>
       </CartProvider>
     </ProductCatalogProvider>
   )

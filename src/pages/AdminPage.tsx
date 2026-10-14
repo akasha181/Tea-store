@@ -24,11 +24,13 @@ import {
   RefreshCw,
   Bell,
   Save,
+  Lock,
 } from 'lucide-react'
 import { Card } from '../components/ui/Card'
 import { Button } from '../components/ui/Button'
 import { Badge } from '../components/ui/Badge'
 import { useProductCatalog } from '../context/useProductCatalog'
+import { useAdminAuth } from '../context/AdminAuthContext'
 import { CATEGORIES } from '../data/products'
 import {
   loadOrderHistory,
@@ -49,6 +51,7 @@ export interface AdminPageProps {
 }
 
 export const AdminPage: React.FC<AdminPageProps> = ({ onNavigateHome, onNavigateToOrders }) => {
+  const { logout } = useAdminAuth()
   const {
     products,
     updateProductPrice,
@@ -355,6 +358,19 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigateHome, onNavigate
           >
             <ShoppingBag className="w-4 h-4 text-forest-950" />
             <span>🛒 Customer Store View (گاہک کا منظر)</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              logout()
+              onNavigateHome()
+            }}
+            className="inline-flex items-center gap-1.5 bg-rose-900/90 hover:bg-rose-800 text-rose-100 font-bold px-3.5 py-2.5 rounded-xl text-xs border border-rose-700/80 transition-colors cursor-pointer"
+            title="Lock Portal & Log Out"
+          >
+            <Lock className="w-3.5 h-3.5 text-rose-300" />
+            <span>Lock &amp; Logout (لاگ آؤٹ)</span>
           </button>
 
           {onNavigateToOrders && (
