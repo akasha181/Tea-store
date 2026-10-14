@@ -25,6 +25,9 @@ import {
   Bell,
   Save,
   Lock,
+  LayoutGrid,
+  List,
+  Image as ImageIcon,
 } from 'lucide-react'
 import { Card } from '../components/ui/Card'
 import { Button } from '../components/ui/Button'
@@ -82,6 +85,8 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigateHome, onNavigate
   const [selectedProductCategory, setSelectedProductCategory] = useState<string>('all')
   const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false)
   const [editingProduct, setEditingProduct] = useState<Product | null>(null)
+  const [productActionNotice, setProductActionNotice] = useState<string | null>(null)
+  const [productViewMode, setProductViewMode] = useState<'table' | 'grid'>('table')
 
   // New product form state
   const [productForm, setProductForm] = useState<Omit<Product, 'id'>>({
@@ -253,29 +258,9 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigateHome, onNavigate
     })
   }, [products, selectedProductCategory, productSearch])
 
-  // Save new or edited product
-  const handleSaveProductSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!productForm.name.trim()) return
-
-    if (editingProduct) {
-      updateProduct(editingProduct.id, {
-        ...productForm,
-        price: Number(productForm.price),
-        stockQuantity: Number(productForm.stockQuantity),
-        inStock: Number(productForm.stockQuantity) > 0,
-      })
-      setEditingProduct(null)
-    } else {
-      addProduct({
-        ...productForm,
-        price: Number(productForm.price),
-        stockQuantity: Number(productForm.stockQuantity),
-        inStock: Number(productForm.stockQuantity) > 0,
-      })
-    }
-
-    setIsAddProductModalOpen(false)
+  // Open Add Product modal with clean defaults
+  const handleOpenAddProduct = () => {
+    setEditingProduct(null)
     setProductForm({
       name: '',
       urduName: '',
@@ -284,12 +269,14 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigateHome, onNavigate
       price: 500,
       inStock: true,
       stockQuantity: 20,
-      badge: 'Fresh',
+      badge: 'Fresh Stock',
       description: '',
       image: '',
     })
+    setIsAddProductModalOpen(true)
   }
 
+  // Open Edit Product modal
   const handleOpenEditProduct = (prod: Product) => {
     setEditingProduct(prod)
     setProductForm({
@@ -305,6 +292,69 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigateHome, onNavigate
       image: prod.image || '',
     })
     setIsAddProductModalOpen(true)
+  }
+
+  // Delete product with confirmation & notification
+  const handleDeleteProduct = (productId: string, productName: string) => {
+    const confirmed = window.confirm(
+      `کیا آپ واقعی "${productName}" کو اسٹور سے ڈیلیٹ کرنا چاہتے ہیں؟\n\nAre you sure you want to delete "${productName}" from the catalog? This will remove it from the customer store view immediately.`
+    )
+    if (!confirmed) return
+
+    deleteProduct(productId)
+    if (editingProduct?.id === productId) {
+      setIsAddProductModalOpen(false)
+      setEditingProduct(null)
+    }
+    setProductActionNotice(`🗑 "${productName}" اسٹور کیٹلاگ سے کامیابی کے ساتھ ڈیلیٹ کر دیا گیا ہے`)
+    setTimeout(() => setProductActionNotice(null), 4000)
+  }
+
+  // Save new or edited product
+  const handleSaveProductSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!productForm.name.trim()) return
+
+    const sanitizedPrice = Math.max(0, Number(productForm.price) || 0)
+    const sanitizedStock = Math.max(0, Number(productForm.stockQuantity) || 0)
+
+    if (editingProduct) {
+      updateProduct(editingProduct.id, {
+        ...productForm,
+        name: productForm.name.trim(),
+        urduName: (productForm.urduName || '').trim(),
+        price: sanitizedPrice,
+        stockQuantity: sanitizedStock,
+        inStock: sanitizedStock > 0,
+      })
+      setProductActionNotice(`✓ "${productForm.name}" کی تمام تفصیلات کامیابی سے اپڈیٹ ہو گئیں!`)
+      setEditingProduct(null)
+    } else {
+      addProduct({
+        ...productForm,
+        name: productForm.name.trim(),
+        urduName: (productForm.urduName || '').trim(),
+        price: sanitizedPrice,
+        stockQuantity: sanitizedStock,
+        inStock: sanitizedStock > 0,
+      })
+      setProductActionNotice(`✓ نیا پروڈکٹ "${productForm.name}" اسٹور کیٹلاگ میں شامل کر دیا گیا!`)
+    }
+
+    setIsAddProductModalOpen(false)
+    setTimeout(() => setProductActionNotice(null), 4000)
+    setProductForm({
+      name: '',
+      urduName: '',
+      category: 'beverages',
+      unit: '1 kg pack',
+      price: 500,
+      inStock: true,
+      stockQuantity: 20,
+      badge: 'Fresh',
+      description: '',
+      image: '',
+    })
   }
 
   // Save Store Settings
@@ -348,16 +398,29 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigateHome, onNavigate
           </p>
         </div>
 
-        {/* Switch back to customer view */}
+        {/* Action buttons */}
         <div className="flex flex-wrap items-center gap-2 shrink-0">
           <button
             type="button"
-            onClick={onNavigateHome}
+            onClick={() => {
+              setActiveTab('products')
+              handleOpenAddProduct()
+            }}
             className="inline-flex items-center gap-2 bg-lime-brand hover:bg-lime-accent active:bg-lime-dark text-forest-950 font-black px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-forest-md transition-all cursor-pointer"
+            title="Add New Product to Store Catalog"
+          >
+            <Plus className="w-4 h-4 text-forest-950 font-black" />
+            <span>+ Add Product (نیا پروڈکٹ شامل کریں)</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={onNavigateHome}
+            className="inline-flex items-center gap-2 bg-forest-800 hover:bg-forest-700 active:bg-forest-900 text-cream-100 font-bold px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-forest-600 transition-all cursor-pointer"
             title="Switch to Customer Store View"
           >
-            <ShoppingBag className="w-4 h-4 text-forest-950" />
-            <span>🛒 Customer Store View (گاہک کا منظر)</span>
+            <ShoppingBag className="w-4 h-4 text-lime-brand" />
+            <span>Customer View (گاہک کا منظر)</span>
           </button>
 
           <button
@@ -826,6 +889,23 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigateHome, onNavigate
       {/* 4. TAB 2: PRODUCT CATALOG & INVENTORY CONTROL */}
       {activeTab === 'products' && (
         <div className="space-y-6">
+          {/* Action Notification Alert Toast */}
+          {productActionNotice && (
+            <div className="bg-lime-brand text-forest-950 p-4 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-between gap-3 shadow-forest-md border-2 border-forest-950 animate-fade-in">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-forest-950 shrink-0" />
+                <span>{productActionNotice}</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setProductActionNotice(null)}
+                className="p-1 rounded-lg hover:bg-forest-950/10 cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          )}
+
           {/* Header toolbar */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-white p-4 rounded-3xl border border-cream-300 shadow-2xs">
             <div>
@@ -836,33 +916,48 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigateHome, onNavigate
                 </span>
               </h2>
               <p className="text-xs text-forest-700/80">
-                Add, edit, or adjust prices and stock quantities for any product in the store. Changes update customer views immediately.
+                Add new grocery items, update prices &amp; stock, or delete items. Changes update the customer store immediately.
               </p>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
+              {/* View Switcher: Table or Visual Cards */}
+              <div className="flex items-center bg-cream-100 p-1 rounded-xl border border-cream-300">
+                <button
+                  type="button"
+                  onClick={() => setProductViewMode('table')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                    productViewMode === 'table'
+                      ? 'bg-forest-950 text-white shadow-2xs'
+                      : 'text-forest-700 hover:text-forest-950'
+                  }`}
+                  title="Table List View"
+                >
+                  <List className="w-3.5 h-3.5" />
+                  <span>Table</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setProductViewMode('grid')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                    productViewMode === 'grid'
+                      ? 'bg-forest-950 text-white shadow-2xs'
+                      : 'text-forest-700 hover:text-forest-950'
+                  }`}
+                  title="Visual Cards Grid View"
+                >
+                  <LayoutGrid className="w-3.5 h-3.5" />
+                  <span>Cards</span>
+                </button>
+              </div>
+
               <Button
                 variant="forest"
                 size="sm"
-                onClick={() => {
-                  setEditingProduct(null)
-                  setProductForm({
-                    name: '',
-                    urduName: '',
-                    category: 'beverages',
-                    unit: '1 kg pack',
-                    price: 500,
-                    inStock: true,
-                    stockQuantity: 20,
-                    badge: 'Fresh',
-                    description: '',
-                    image: '',
-                  })
-                  setIsAddProductModalOpen(true)
-                }}
+                onClick={handleOpenAddProduct}
                 iconLeft={<Plus className="w-4 h-4" />}
               >
-                Add New Product (نئی چیز شامل کریں)
+                + Add Product (نیا پروڈکٹ شامل کریں)
               </Button>
 
               <button
@@ -907,118 +1002,282 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigateHome, onNavigate
             </div>
           </div>
 
-          {/* Products Table */}
-          <div className="bg-white rounded-3xl border border-cream-300 overflow-hidden shadow-2xs">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs border-collapse">
-                <thead>
-                  <tr className="bg-cream-100 border-b border-cream-200 text-forest-950 font-bold">
-                    <th className="py-3 px-4">Item Name</th>
-                    <th className="py-3 px-4">Category</th>
-                    <th className="py-3 px-4">Unit</th>
-                    <th className="py-3 px-4">Price (PKR)</th>
-                    <th className="py-3 px-4">Stock Qty</th>
-                    <th className="py-3 px-4">Status</th>
-                    <th className="py-3 px-4 text-right">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-cream-200 text-forest-900">
-                  {filteredProducts.map((p) => {
-                    const isAvail = p.inStock && p.stockQuantity > 0
+          {/* Empty Filter State */}
+          {filteredProducts.length === 0 ? (
+            <Card className="p-10 text-center space-y-4 bg-white">
+              <div className="w-16 h-16 mx-auto rounded-3xl bg-cream-100 flex items-center justify-center text-forest-700">
+                <Package className="w-8 h-8" />
+              </div>
+              <h3 className="text-base font-extrabold text-forest-950">
+                No products match "{productSearch || selectedProductCategory}"
+              </h3>
+              <p className="text-xs text-forest-700/70 max-w-md mx-auto">
+                Try searching for a different commodity, or add a new product directly to this aisle category.
+              </p>
+              <Button variant="forest" size="sm" onClick={handleOpenAddProduct} iconLeft={<Plus className="w-4 h-4" />}>
+                Add New Product Now
+              </Button>
+            </Card>
+          ) : productViewMode === 'table' ? (
+            /* Table View */
+            <div className="bg-white rounded-3xl border border-cream-300 overflow-hidden shadow-2xs">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr className="bg-cream-100 border-b border-cream-200 text-forest-950 font-bold">
+                      <th className="py-3 px-4">Item Name &amp; Photo</th>
+                      <th className="py-3 px-4">Category</th>
+                      <th className="py-3 px-4">Unit</th>
+                      <th className="py-3 px-4">Price (PKR)</th>
+                      <th className="py-3 px-4">Stock Qty</th>
+                      <th className="py-3 px-4">Status</th>
+                      <th className="py-3 px-4 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-cream-200 text-forest-900">
+                    {filteredProducts.map((p) => {
+                      const isAvail = p.inStock && p.stockQuantity > 0
 
-                    return (
-                      <tr key={p.id} className="hover:bg-cream-50/60 transition-colors">
-                        <td className="py-3 px-4">
-                          <span className="font-bold text-forest-950 block">{p.name}</span>
-                          {p.urduName && (
-                            <span className="font-urdu text-forest-700 text-[11px] block">
-                              {p.urduName}
-                            </span>
-                          )}
-                          {p.badge && (
-                            <span className="inline-block mt-0.5 text-[9px] bg-lime-brand/40 text-forest-950 font-bold px-1.5 py-0.2 rounded">
-                              {p.badge}
-                            </span>
-                          )}
-                        </td>
-                        <td className="py-3 px-4 capitalize font-medium text-forest-700">
-                          {p.category}
-                        </td>
-                        <td className="py-3 px-4 font-mono font-medium">{p.unit}</td>
-                        <td className="py-3 px-4">
-                          <div className="flex items-center gap-1.5">
-                            <span className="font-bold font-mono">Rs.</span>
-                            <input
-                              type="number"
-                              min={0}
-                              value={p.price}
-                              onChange={(e) => updateProductPrice(p.id, Number(e.target.value))}
-                              className="w-20 px-2 py-1 bg-cream-50 border border-cream-300 rounded-lg font-mono font-black text-xs text-forest-950 focus:outline-none focus:ring-1 focus:ring-forest-600"
-                            />
+                      return (
+                        <tr key={p.id} className="hover:bg-cream-50/60 transition-colors">
+                          <td className="py-3 px-4">
+                            <div className="flex items-center gap-3">
+                              <div className="w-11 h-11 rounded-xl overflow-hidden bg-cream-100 border border-cream-200 shrink-0 flex items-center justify-center shadow-2xs">
+                                {p.image ? (
+                                  <img
+                                    src={p.image}
+                                    alt={p.name}
+                                    className="w-full h-full object-cover"
+                                    onError={(e) => {
+                                      ;(e.target as HTMLImageElement).src =
+                                        '/images/products/beverages-tapal-danedar-tea-430g.jpg'
+                                    }}
+                                  />
+                                ) : (
+                                  <Package className="w-5 h-5 text-forest-700/50" />
+                                )}
+                              </div>
+                              <div>
+                                <span className="font-bold text-forest-950 block">{p.name}</span>
+                                {p.urduName && (
+                                  <span className="font-urdu text-forest-700 text-[11px] block">
+                                    {p.urduName}
+                                  </span>
+                                )}
+                                {p.badge && (
+                                  <span className="inline-block mt-0.5 text-[9px] bg-lime-brand/40 text-forest-950 font-bold px-1.5 py-0.2 rounded">
+                                    {p.badge}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          </td>
+                          <td className="py-3 px-4 capitalize font-medium text-forest-700">
+                            {p.category}
+                          </td>
+                          <td className="py-3 px-4 font-mono font-medium">{p.unit}</td>
+                          <td className="py-3 px-4">
+                            <div className="flex items-center gap-1.5">
+                              <span className="font-bold font-mono">Rs.</span>
+                              <input
+                                type="number"
+                                min={0}
+                                value={p.price}
+                                onChange={(e) => updateProductPrice(p.id, Number(e.target.value))}
+                                className="w-20 px-2 py-1 bg-cream-50 border border-cream-300 rounded-lg font-mono font-black text-xs text-forest-950 focus:outline-none focus:ring-1 focus:ring-forest-600"
+                              />
+                            </div>
+                          </td>
+                          <td className="py-3 px-4">
+                            <div className="flex items-center gap-1">
+                              <input
+                                type="number"
+                                min={0}
+                                value={p.stockQuantity}
+                                onChange={(e) =>
+                                  updateProductStockQuantity(p.id, Number(e.target.value))
+                                }
+                                className="w-16 px-2 py-1 bg-cream-50 border border-cream-300 rounded-lg font-mono font-bold text-xs text-forest-950 focus:outline-none focus:ring-1 focus:ring-forest-600"
+                              />
+                              {p.stockQuantity <= 5 && p.stockQuantity > 0 && (
+                                <span className="text-[10px] text-amber-700 font-bold bg-amber-100 px-1.5 py-0.5 rounded">
+                                  Low
+                                </span>
+                              )}
+                            </div>
+                          </td>
+                          <td className="py-3 px-4">
+                            <button
+                              type="button"
+                              onClick={() => toggleProductStock(p.id)}
+                              className={`px-2.5 py-1 rounded-full text-[10px] font-black uppercase cursor-pointer transition-colors ${
+                                isAvail
+                                  ? 'bg-forest-100 text-forest-800 hover:bg-forest-200'
+                                  : 'bg-rose-100 text-rose-800 hover:bg-rose-200'
+                              }`}
+                            >
+                              {isAvail ? 'In Stock' : 'Out of Stock'}
+                            </button>
+                          </td>
+                          <td className="py-3 px-4 text-right">
+                            <div className="flex items-center justify-end gap-1.5">
+                              <button
+                                type="button"
+                                onClick={() => handleOpenEditProduct(p)}
+                                className="p-1.5 rounded-lg text-forest-700 hover:bg-cream-200 cursor-pointer"
+                                title="Edit Details (ترمیم کریں)"
+                              >
+                                <Edit2 className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handleDeleteProduct(p.id, p.name)}
+                                className="p-1.5 rounded-lg text-rose-600 hover:bg-rose-50 cursor-pointer"
+                                title="Delete Product (ڈیلیٹ کریں)"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ) : (
+            /* Visual Cards Grid View */
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {filteredProducts.map((p) => {
+                const isAvail = p.inStock && p.stockQuantity > 0
+
+                return (
+                  <Card
+                    key={p.id}
+                    className="overflow-hidden bg-white border border-cream-300 flex flex-col justify-between hover:shadow-forest-sm transition-all group"
+                  >
+                    <div>
+                      {/* Card Image */}
+                      <div className="relative aspect-4/3 w-full bg-cream-100 overflow-hidden border-b border-cream-200">
+                        {p.image ? (
+                          <img
+                            src={p.image}
+                            alt={p.name}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            onError={(e) => {
+                              ;(e.target as HTMLImageElement).src =
+                                '/images/products/beverages-tapal-danedar-tea-430g.jpg'
+                            }}
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-forest-700/40">
+                            <Package className="w-12 h-12" />
                           </div>
-                        </td>
-                        <td className="py-3 px-4">
-                          <div className="flex items-center gap-1">
-                            <input
-                              type="number"
-                              min={0}
-                              value={p.stockQuantity}
-                              onChange={(e) =>
-                                updateProductStockQuantity(p.id, Number(e.target.value))
-                              }
-                              className="w-16 px-2 py-1 bg-cream-50 border border-cream-300 rounded-lg font-mono font-bold text-xs text-forest-950 focus:outline-none focus:ring-1 focus:ring-forest-600"
-                            />
-                            {p.stockQuantity <= 5 && p.stockQuantity > 0 && (
-                              <span className="text-[10px] text-amber-700 font-bold bg-amber-100 px-1.5 py-0.5 rounded">
-                                Low
-                              </span>
-                            )}
-                          </div>
-                        </td>
-                        <td className="py-3 px-4">
+                        )}
+                        {p.badge && (
+                          <span className="absolute top-2 left-2 bg-forest-950/90 text-lime-brand text-[10px] font-black px-2 py-0.5 rounded-md shadow-2xs backdrop-blur-xs">
+                            {p.badge}
+                          </span>
+                        )}
+                        <span className="absolute bottom-2 right-2 bg-white/90 text-forest-950 text-[10px] font-bold px-2 py-0.5 rounded-md border border-cream-300 backdrop-blur-xs">
+                          {p.unit}
+                        </span>
+                      </div>
+
+                      {/* Details */}
+                      <div className="p-4 space-y-2">
+                        <div className="flex items-start justify-between gap-1">
+                          <span className="text-[10px] uppercase font-bold text-forest-700/70 tracking-wider">
+                            {p.category}
+                          </span>
                           <button
                             type="button"
                             onClick={() => toggleProductStock(p.id)}
-                            className={`px-2.5 py-1 rounded-full text-[10px] font-black uppercase cursor-pointer transition-colors ${
-                              isAvail
-                                ? 'bg-forest-100 text-forest-800 hover:bg-forest-200'
-                                : 'bg-rose-100 text-rose-800 hover:bg-rose-200'
+                            className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-full cursor-pointer transition-colors ${
+                              isAvail ? 'bg-forest-100 text-forest-800' : 'bg-rose-100 text-rose-800'
                             }`}
                           >
                             {isAvail ? 'In Stock' : 'Out of Stock'}
                           </button>
-                        </td>
-                        <td className="py-3 px-4 text-right">
-                          <div className="flex items-center justify-end gap-1.5">
-                            <button
-                              type="button"
-                              onClick={() => handleOpenEditProduct(p)}
-                              className="p-1.5 rounded-lg text-forest-700 hover:bg-cream-200 cursor-pointer"
-                              title="Edit Details"
-                            >
-                              <Edit2 className="w-3.5 h-3.5" />
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => {
-                                if (window.confirm(`Delete "${p.name}" from catalog?`)) {
-                                  deleteProduct(p.id)
-                                }
-                              }}
-                              className="p-1.5 rounded-lg text-rose-600 hover:bg-rose-50 cursor-pointer"
-                              title="Delete Product"
-                            >
-                              <Trash2 className="w-3.5 h-3.5" />
-                            </button>
+                        </div>
+
+                        <div>
+                          <h4 className="font-extrabold text-sm text-forest-950 line-clamp-1">
+                            {p.name}
+                          </h4>
+                          {p.urduName && (
+                            <p className="font-urdu text-xs text-forest-700 font-bold line-clamp-1">
+                              {p.urduName}
+                            </p>
+                          )}
+                        </div>
+
+                        {/* Price & Stock info */}
+                        <div className="pt-2 border-t border-cream-200 flex items-center justify-between text-xs">
+                          <div>
+                            <span className="text-[10px] text-forest-700/70 block">Price</span>
+                            <span className="font-mono font-black text-forest-950 text-sm">
+                              Rs. {p.price}
+                            </span>
                           </div>
-                        </td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
+                          <div className="text-right">
+                            <span className="text-[10px] text-forest-700/70 block">Stock Qty</span>
+                            <span
+                              className={`font-mono font-bold ${
+                                p.stockQuantity <= 5 ? 'text-amber-700' : 'text-forest-950'
+                              }`}
+                            >
+                              {p.stockQuantity} units
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Quick stock adjustment buttons */}
+                        <div className="pt-1 flex items-center justify-end gap-1 text-[10px]">
+                          <span className="text-forest-700/60 font-semibold mr-1">Restock:</span>
+                          <button
+                            type="button"
+                            onClick={() => updateProductStockQuantity(p.id, p.stockQuantity + 5)}
+                            className="px-2 py-0.5 bg-cream-100 hover:bg-cream-200 text-forest-950 font-bold rounded border border-cream-300 cursor-pointer"
+                          >
+                            +5
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => updateProductStockQuantity(p.id, p.stockQuantity + 10)}
+                            className="px-2 py-0.5 bg-cream-100 hover:bg-cream-200 text-forest-950 font-bold rounded border border-cream-300 cursor-pointer"
+                          >
+                            +10
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="p-3 bg-cream-50 border-t border-cream-200 flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => handleOpenEditProduct(p)}
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 bg-white hover:bg-cream-100 text-forest-950 font-bold py-1.5 px-2 rounded-xl text-xs border border-cream-300 transition-colors cursor-pointer"
+                      >
+                        <Edit2 className="w-3.5 h-3.5 text-forest-700" />
+                        <span>Edit (ترمیم)</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteProduct(p.id, p.name)}
+                        className="inline-flex items-center justify-center p-2 rounded-xl text-rose-600 hover:bg-rose-50 border border-transparent hover:border-rose-200 transition-colors cursor-pointer"
+                        title="Delete product"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </Card>
+                )
+              })}
             </div>
-          </div>
+          )}
         </div>
       )}
 
@@ -1317,6 +1576,115 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigateHome, onNavigate
                 </div>
               </div>
 
+              {/* Product Image URL with Live Preview */}
+              <div className="space-y-1.5 p-3 rounded-2xl bg-cream-50/80 border border-cream-300">
+                <div className="flex items-center justify-between">
+                  <label className="block font-bold text-forest-950">
+                    Product Image (پروڈکٹ کی تصویر کا لنک)
+                  </label>
+                  <span className="text-[10px] text-forest-700/80">
+                    انٹرنیٹ سے کوئی بھی لنک یا ذیل سے منتخب کریں
+                  </span>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="flex-1 space-y-2">
+                    <input
+                      type="url"
+                      value={productForm.image}
+                      onChange={(e) => setProductForm({ ...productForm, image: e.target.value })}
+                      placeholder="https://... or /images/products/..."
+                      className="w-full p-2.5 bg-white border border-cream-300 rounded-xl font-mono text-xs text-forest-950 placeholder:text-forest-900/40 focus:outline-none focus:ring-2 focus:ring-forest-600/20"
+                    />
+
+                    {/* Quick Category Defaults / Presets */}
+                    <div className="flex flex-wrap items-center gap-1.5 text-[10px]">
+                      <span className="text-forest-700/80 font-bold">Quick Presets:</span>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setProductForm({
+                            ...productForm,
+                            image: '/images/products/beverages-tapal-danedar-tea-430g.jpg',
+                          })
+                        }
+                        className="px-2 py-0.5 bg-white hover:bg-cream-100 text-forest-900 rounded-md border border-cream-300 font-semibold cursor-pointer"
+                      >
+                        ☕ Tea (چائے)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setProductForm({
+                            ...productForm,
+                            image: '/images/products/staples-sunridge-atta-10kg.jpg',
+                          })
+                        }
+                        className="px-2 py-0.5 bg-white hover:bg-cream-100 text-forest-900 rounded-md border border-cream-300 font-semibold cursor-pointer"
+                      >
+                        🌾 Flour (آٹا)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setProductForm({
+                            ...productForm,
+                            image: '/images/products/pulses-super-basmati-rice-1kg.jpg',
+                          })
+                        }
+                        className="px-2 py-0.5 bg-white hover:bg-cream-100 text-forest-900 rounded-md border border-cream-300 font-semibold cursor-pointer"
+                      >
+                        🍚 Rice (چاول)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setProductForm({
+                            ...productForm,
+                            image: '/images/products/cooking-dalda-banaspati-ghee-1kg.jpg',
+                          })
+                        }
+                        className="px-2 py-0.5 bg-white hover:bg-cream-100 text-forest-900 rounded-md border border-cream-300 font-semibold cursor-pointer"
+                      >
+                        🛢 Ghee (گھی)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setProductForm({
+                            ...productForm,
+                            image: '/images/products/spices-national-red-chilli-200g.jpg',
+                          })
+                        }
+                        className="px-2 py-0.5 bg-white hover:bg-cream-100 text-forest-900 rounded-md border border-cream-300 font-semibold cursor-pointer"
+                      >
+                        🌶 Spices (مصالحہ)
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Live Thumbnail Preview */}
+                  <div className="w-18 h-18 rounded-2xl overflow-hidden bg-white border-2 border-dashed border-cream-300 shrink-0 flex items-center justify-center shadow-2xs">
+                    {productForm.image ? (
+                      <img
+                        src={productForm.image}
+                        alt="Preview"
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          ;(e.target as HTMLImageElement).src =
+                            '/images/products/beverages-tapal-danedar-tea-430g.jpg'
+                        }}
+                      />
+                    ) : (
+                      <div className="text-center p-1 text-forest-700/50">
+                        <ImageIcon className="w-5 h-5 mx-auto mb-0.5" />
+                        <span className="text-[9px] font-bold block leading-tight">No Image</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
               <div>
                 <label className="block font-bold text-forest-950 mb-1">Special Badge (optional)</label>
                 <input
@@ -1339,13 +1707,29 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigateHome, onNavigate
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-3 border-t border-cream-200">
-                <Button variant="outline" size="sm" onClick={() => setIsAddProductModalOpen(false)}>
-                  Cancel
-                </Button>
-                <Button variant="forest" size="sm">
-                  {editingProduct ? 'Save Changes' : 'Add to Store'}
-                </Button>
+              <div className="flex items-center justify-between gap-2 pt-3 border-t border-cream-200">
+                {editingProduct ? (
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteProduct(editingProduct.id, editingProduct.name)}
+                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-rose-700 hover:bg-rose-50 border border-rose-200 font-bold text-xs transition-colors cursor-pointer"
+                    title="Delete product permanently"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Delete Product (ڈیلیٹ کریں)</span>
+                  </button>
+                ) : (
+                  <div />
+                )}
+
+                <div className="flex items-center gap-2">
+                  <Button variant="outline" size="sm" onClick={() => setIsAddProductModalOpen(false)}>
+                    Cancel
+                  </Button>
+                  <Button variant="forest" size="sm" iconLeft={<Save className="w-4 h-4" />}>
+                    {editingProduct ? 'Save Changes (تبدیلیاں محفوظ کریں)' : 'Add to Store (اسٹور میں شامل کریں)'}
+                  </Button>
+                </div>
               </div>
             </form>
           </div>

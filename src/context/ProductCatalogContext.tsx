@@ -14,7 +14,7 @@ function loadSavedCatalog(): Product[] {
     if (Array.isArray(parsed) && parsed.length > 0) {
       return parsed.map((item: Product) => {
         const initialMatch = INITIAL_PRODUCTS.find((p) => p.id === item.id)
-        if (initialMatch) {
+        if (initialMatch && (!item.image || item.image.trim() === '')) {
           return { ...item, image: initialMatch.image }
         }
         return item
@@ -81,9 +81,22 @@ export const ProductCatalogProvider: React.FC<{ children: React.ReactNode }> = (
 
   const addProduct = (newProdData: Omit<Product, 'id'> & { id?: string }): Product => {
     const id = newProdData.id || `custom-${Date.now()}-${Math.floor(Math.random() * 1000)}`
+    let image = newProdData.image && newProdData.image.trim() !== '' ? newProdData.image : ''
+    if (!image) {
+      const defaultCategoryImages: Record<string, string> = {
+        staples: '/images/products/staples-sunridge-atta-10kg.jpg',
+        pulses: '/images/products/pulses-super-basmati-rice-1kg.jpg',
+        cooking: '/images/products/cooking-dalda-banaspati-ghee-1kg.jpg',
+        spices: '/images/products/spices-national-red-chilli-200g.jpg',
+        beverages: '/images/products/beverages-tapal-danedar-tea-430g.jpg',
+      }
+      image = defaultCategoryImages[newProdData.category] || '/images/products/beverages-tapal-danedar-tea-430g.jpg'
+    }
+
     const product: Product = {
       ...newProdData,
       id,
+      image,
       inStock: newProdData.inStock !== undefined ? newProdData.inStock : (newProdData.stockQuantity > 0),
     }
     setProducts((prev) => [product, ...prev])
