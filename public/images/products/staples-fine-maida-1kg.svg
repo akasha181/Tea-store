@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="600" height="400" fill="url(#bgGrad)" />
+
+  <!-- Soft Accent Ambient Glow -->
+  <circle cx="300" cy="220" r="160" fill="#94a3b8" opacity="0.12" />
+
+  <!-- Outer Elegant Frame -->
+  <rect x="18" y="18" width="564" height="364" rx="24" fill="none" stroke="#475569" stroke-width="2" stroke-opacity="0.25"/>
+
+  <!-- Store Header Strip -->
+  <rect x="36" y="28" width="528" height="34" rx="10" fill="#0f291e" opacity="0.9"/>
+  <text x="50" y="50" fill="#a3e635" font-size="11" font-weight="900" font-family="system-ui, sans-serif" letter-spacing="1">HAFIZ G CHAI &amp; KIRYANA STORE</text>
+  <text x="548" y="50" text-anchor="end" fill="#ffffff" font-size="11" font-weight="bold" font-family="system-ui, sans-serif">STAPLES & FLOUR</text>
+
+  <!-- Product Illustration -->
+  <g filter="url(#cardShadow)">
+    
+        <!-- White Flour Bag -->
+        <rect x="235" y="130" width="130" height="190" rx="16" fill="#f8fafc" stroke="#94a3b8" stroke-width="6"/>
+        <rect x="245" y="140" width="110" height="40" rx="8" fill="#e2e8f0"/>
+        <text x="300" y="165" text-anchor="middle" fill="#334155" font-size="14" font-weight="900" font-family="sans-serif">FINE MAIDA</text>
+        <circle cx="300" cy="225" r="32" fill="#cbd5e1" opacity="0.5"/>
+        <path d="M 285 225 Q 300 205 315 225 Q 300 245 285 225 Z" fill="#ffffff"/>
+        <!-- Weight Tag -->
+        <rect x="260" y="275" width="80" height="26" rx="13" fill="#0284c7"/>
+        <text x="300" y="292" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold" font-family="sans-serif">100% PURE</text>
+      
+  </g>
+
+  <!-- Left Side Badge: Guarantee -->
+  <g transform="translate(36, 120)">
+    <rect width="130" height="48" rx="12" fill="#ffffff" stroke="#475569" stroke-width="1.5" filter="url(#cardShadow)"/>
+    <text x="65" y="22" text-anchor="middle" fill="#64748b" font-size="9" font-weight="bold" font-family="system-ui, sans-serif">QUALITY SEAL</text>
+    <text x="65" y="38" text-anchor="middle" fill="#475569" font-size="11" font-weight="900" font-family="system-ui, sans-serif">100% KHÁLIS</text>
+  </g>
+
+  <!-- Right Side Badge: Unit Weight -->
+  <g transform="translate(434, 120)">
+    <rect width="130" height="48" rx="12" fill="#ffffff" stroke="#475569" stroke-width="1.5" filter="url(#cardShadow)"/>
+    <text x="65" y="22" text-anchor="middle" fill="#64748b" font-size="9" font-weight="bold" font-family="system-ui, sans-serif">NET WEIGHT</text>
+    <text x="65" y="38" text-anchor="middle" fill="#0f172a" font-size="11" font-weight="900" font-family="system-ui, sans-serif">1 KG PACK</text>
+  </g>
+
+  <!-- Bottom Details Overlay Banner -->
+  <g transform="translate(36, 326)">
+    <rect width="528" height="48" rx="14" fill="#0f291e" filter="url(#cardShadow)"/>
+    <!-- English Name -->
+    <text x="24" y="30" fill="#ffffff" font-size="16" font-weight="900" font-family="system-ui, sans-serif">Fine Maida Super</text>
+    <!-- Badge -->
+    <rect x="260" y="14" width="130" height="22" rx="6" fill="#a3e635"/>
+    <text x="325" y="29" text-anchor="middle" fill="#052e16" font-size="10" font-weight="900" font-family="system-ui, sans-serif">Super Patent</text>
+    <!-- Urdu Name -->
+    <text x="508" y="31" text-anchor="end" fill="#fef08a" font-size="16" font-weight="bold" font-family="system-ui, 'Noto Nastaliq Urdu', sans-serif">فائن میدہ سپر کوالٹی</text>
+  </g>
+</svg>

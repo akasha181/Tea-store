@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="600" height="400" fill="url(#bgGrad)" />
+
+  <!-- Soft Accent Ambient Glow -->
+  <circle cx="300" cy="220" r="160" fill="#16a34a" opacity="0.12" />
+
+  <!-- Outer Elegant Frame -->
+  <rect x="18" y="18" width="564" height="364" rx="24" fill="none" stroke="#b91c1c" stroke-width="2" stroke-opacity="0.25"/>
+
+  <!-- Store Header Strip -->
+  <rect x="36" y="28" width="528" height="34" rx="10" fill="#0f291e" opacity="0.9"/>
+  <text x="50" y="50" fill="#a3e635" font-size="11" font-weight="900" font-family="system-ui, sans-serif" letter-spacing="1">HAFIZ G CHAI &amp; KIRYANA STORE</text>
+  <text x="548" y="50" text-anchor="end" fill="#ffffff" font-size="11" font-weight="bold" font-family="system-ui, sans-serif">GHEE & COOKING OIL</text>
+
+  <!-- Product Illustration -->
+  <g filter="url(#cardShadow)">
+    
+        <!-- Dalda Ghee Pouch Structure -->
+        <path d="M 240 120 L 360 120 L 380 320 L 220 320 Z" fill="#15803d" stroke="#166534" stroke-width="6"/>
+        <!-- Red Top Diagonal Ribbon -->
+        <path d="M 240 120 L 360 120 L 365 170 L 235 170 Z" fill="#dc2626"/>
+        <text x="300" y="152" text-anchor="middle" fill="#ffffff" font-size="18" font-weight="900" font-family="sans-serif">DALDA</text>
+        <!-- Yellow Sunlight & Droplet -->
+        <circle cx="300" cy="230" r="38" fill="#fef08a" stroke="#ca8a04" stroke-width="3"/>
+        <path d="M 300 205 C 315 225, 320 245, 300 255 C 280 245, 285 225, 300 205 Z" fill="#eab308"/>
+        <text x="300" y="295" text-anchor="middle" fill="#fef08a" font-size="13" font-weight="bold" font-family="sans-serif">BANASPATI GHEE</text>
+      
+  </g>
+
+  <!-- Left Side Badge: Guarantee -->
+  <g transform="translate(36, 120)">
+    <rect width="130" height="48" rx="12" fill="#ffffff" stroke="#b91c1c" stroke-width="1.5" filter="url(#cardShadow)"/>
+    <text x="65" y="22" text-anchor="middle" fill="#64748b" font-size="9" font-weight="bold" font-family="system-ui, sans-serif">QUALITY SEAL</text>
+    <text x="65" y="38" text-anchor="middle" fill="#b91c1c" font-size="11" font-weight="900" font-family="system-ui, sans-serif">100% KHÁLIS</text>
+  </g>
+
+  <!-- Right Side Badge: Unit Weight -->
+  <g transform="translate(434, 120)">
+    <rect width="130" height="48" rx="12" fill="#ffffff" stroke="#b91c1c" stroke-width="1.5" filter="url(#cardShadow)"/>
+    <text x="65" y="22" text-anchor="middle" fill="#64748b" font-size="9" font-weight="bold" font-family="system-ui, sans-serif">NET WEIGHT</text>
+    <text x="65" y="38" text-anchor="middle" fill="#0f172a" font-size="11" font-weight="900" font-family="system-ui, sans-serif">1 KG POUCH</text>
+  </g>
+
+  <!-- Bottom Details Overlay Banner -->
+  <g transform="translate(36, 326)">
+    <rect width="528" height="48" rx="14" fill="#0f291e" filter="url(#cardShadow)"/>
+    <!-- English Name -->
+    <text x="24" y="30" fill="#ffffff" font-size="16" font-weight="900" font-family="system-ui, sans-serif">Dalda Banaspati Ghee</text>
+    <!-- Badge -->
+    <rect x="260" y="14" width="130" height="22" rx="6" fill="#a3e635"/>
+    <text x="325" y="29" text-anchor="middle" fill="#052e16" font-size="10" font-weight="900" font-family="system-ui, sans-serif">Vitamin A & D Fortified</text>
+    <!-- Urdu Name -->
+    <text x="508" y="31" text-anchor="end" fill="#fef08a" font-size="16" font-weight="bold" font-family="system-ui, 'Noto Nastaliq Urdu', sans-serif">ڈالڈا بناسپتی گھی</text>
+  </g>
+</svg>

@@ -94,7 +94,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: '100% whole wheat chakki flour, naturally rich in dietary fiber. Cleaned with automated Swiss technology.',
     tags: ['atta', 'flour', 'wheat', 'chakki', 'sunridge', 'roti', 'staples'],
     isSamplePrice: true,
-    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80',
+    image: '/images/products/staples-sunridge-atta-10kg.svg',
   },
   {
     id: 'staples-desi-chakki-atta-20kg',
@@ -113,7 +113,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Freshly ground daily from Grade-A certified Punjab wheat. Soft rotis guaranteed without maida mixing.',
     tags: ['atta', 'wheat', 'chakki', 'desi', '20kg', 'family pack'],
     isSamplePrice: true,
-    image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=600&q=80',
+    image: '/images/products/staples-desi-chakki-atta-20kg.svg',
   },
   {
     id: 'staples-fine-maida-1kg',
@@ -130,7 +130,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Super fine white all-purpose flour for soft naans, puri, samosas, and home baking.',
     tags: ['maida', 'flour', 'baking', 'samosa', 'naan'],
     isSamplePrice: true,
-    image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80',
+    image: '/images/products/staples-fine-maida-1kg.svg',
   },
   {
     id: 'staples-wheat-dalia-1kg',
@@ -148,7 +148,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Coarsely crushed golden wheat grains ideal for high-fiber nutritious breakfast porridge.',
     tags: ['dalia', 'porridge', 'healthy', 'fiber', 'breakfast'],
     isSamplePrice: true,
-    image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=600&q=80',
+    image: '/images/products/staples-wheat-dalia-1kg.svg',
   },
   {
     id: 'staples-pure-suji-1kg',
@@ -166,7 +166,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Crisp coarse semolina freshly milled from durum wheat for traditional halwa and sweet delights.',
     tags: ['suji', 'semolina', 'halwa', 'sweets'],
     isSamplePrice: true,
-    image: 'https://images.unsplash.com/photo-1586201375833-2895f00e95c4?auto=format&fit=crop&w=600&q=80',
+    image: '/images/products/staples-pure-suji-1kg.svg',
   },
 
   // 2. Pulses & Rice (دالیں و چاول)
@@ -187,7 +187,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Authentic aged long-grain aromatic basmati rice from Punjab heartland. Non-sticky fluffy cooking.',
     tags: ['rice', 'basmati', 'chawal', 'kainat', 'biryani', 'pulao'],
     isSamplePrice: true,
-    image: 'https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?auto=format&fit=crop&w=600&q=80',
+    image: '/images/products/pulses-super-basmati-rice-1kg.svg',
   },
   {
     id: 'pulses-kainat-saila-rice-1kg',
@@ -205,7 +205,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Premium parboiled extra-long grain rice for fragrant biryani, zarda, and festive banquets.',
     tags: ['sela', 'rice', 'chawal', 'biryani', '1121'],
     isSamplePrice: true,
-    image: 'https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=600&q=80',
+    image: '/images/products/pulses-kainat-saila-rice-1kg.svg',
   },
   {
     id: 'pulses-daal-chana-special-1kg',
@@ -223,7 +223,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Triple-sorted, stone-free split chickpeas dal. Quick cooking with traditional desi flavor.',
     tags: ['daal', 'chana', 'pulses', 'lentils', 'desi'],
     isSamplePrice: true,
-    image: 'https://images.unsplash.com/photo-1585996838426-6099c29d4b55?auto=format&fit=crop&w=600&q=80',
+    image: '/images/products/pulses-daal-chana-special-1kg.svg',
   },
   {
     id: 'pulses-daal-moong-dhuli-1kg',
@@ -240,7 +240,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Carefully machine-sorted yellow split moong lentils. Gentle on stomach, ideal for khichdi and soups.',
     tags: ['daal', 'moong', 'lentils', 'khichdi', 'pulses'],
     isSamplePrice: true,
-    image: 'https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=600&q=80',
+    image: '/images/products/pulses-daal-moong-dhuli-1kg.svg',
   },
   {
     id: 'pulses-daal-masoor-whole-1kg',
@@ -257,7 +257,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Selected brown-skin whole red lentils, hearty and full of natural dietary iron and minerals.',
     tags: ['daal', 'masoor', 'lentils', 'pulses'],
     isSamplePrice: true,
-    image: 'https://images.unsplash.com/photo-1546548970-71785318a17b?auto=format&fit=crop&w=600&q=80',
+    image: '/images/products/pulses-daal-masoor-whole-1kg.svg',
   },
   {
     id: 'pulses-daal-mash-washed-1kg',
@@ -276,7 +276,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'White skinless whole urad dal, creamy texture, ideal for dahi baray and dhaba-style bhuna mash.',
     tags: ['daal', 'mash', 'urad', 'dahi baray', 'pulses'],
     isSamplePrice: true,
-    image: 'https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=600&q=80',
+    image: '/images/products/pulses-daal-mash-washed-1kg.svg',
   },
 
   // 3. Ghee & Cooking Oil (گھی و تیل)
@@ -297,7 +297,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Fortified with Vitamin A & D. Trusted taste and aroma for parathas and aromatic curries.',
     tags: ['ghee', 'dalda', 'banaspati', 'cooking', 'oil'],
     isSamplePrice: true,
-    image: 'https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?auto=format&fit=crop&w=600&q=80',
+    image: '/images/products/cooking-dalda-banaspati-ghee-1kg.svg',
   },
   {
     id: 'cooking-habib-oil-canister-5l',
@@ -316,7 +316,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Naturally enriched with Vitamin A, D & E. Light, zero cholesterol and easily digestible.',
     tags: ['oil', 'habib', 'canister', 'cooking', '5l'],
     isSamplePrice: true,
-    image: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=600&q=80',
+    image: '/images/products/cooking-habib-oil-canister-5l.svg',
   },
   {
     id: 'cooking-mehran-desi-sarson-oil-1l',
@@ -334,7 +334,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Traditional direct cold-pressed pungent mustard oil for pickling, frying, and massage.',
     tags: ['oil', 'sarson', 'mustard', 'achar', 'pure', 'cold pressed'],
     isSamplePrice: true,
-    image: 'https://images.unsplash.com/photo-1543083477-4f785aeafaa9?auto=format&fit=crop&w=600&q=80',
+    image: '/images/products/cooking-mehran-desi-sarson-oil-1l.svg',
   },
   {
     id: 'cooking-sufi-sunflower-oil-1l',
@@ -352,7 +352,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Triple-refined healthy cooking oil with omega-3 fatty acids for heart-conscious families.',
     tags: ['oil', 'sufi', 'canola', 'sunflower', 'healthy'],
     isSamplePrice: true,
-    image: 'https://images.unsplash.com/photo-1620706857370-e1b9770e8bb1?auto=format&fit=crop&w=600&q=80',
+    image: '/images/products/cooking-sufi-sunflower-oil-1l.svg',
   },
 
   // 4. Spices & Seasonings (مصالحہ جات و نمک)
@@ -371,7 +371,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Refined free-flowing vacuum salt enriched with iodine for family wellness.',
     tags: ['salt', 'namak', 'national', 'iodized', 'spices'],
     isSamplePrice: true,
-    image: 'https://images.unsplash.com/photo-1518110903415-385002b85e92?auto=format&fit=crop&w=600&q=80',
+    image: '/images/products/spices-national-iodized-salt-800g.svg',
   },
   {
     id: 'spices-national-red-chilli-200g',
@@ -388,7 +388,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Pure sun-ripened red chillies ground to rich red colour without synthetic dyes or additives.',
     tags: ['mirch', 'chilli', 'spices', 'national', 'masalay'],
     isSamplePrice: true,
-    image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=600&q=80',
+    image: '/images/products/spices-national-red-chilli-200g.svg',
   },
   {
     id: 'spices-mehran-turmeric-haldi-200g',
@@ -406,7 +406,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Aromatic unadulterated ground turmeric root with high natural curcumin essence.',
     tags: ['haldi', 'turmeric', 'spices', 'mehran', 'curcumin'],
     isSamplePrice: true,
-    image: 'https://images.unsplash.com/photo-1615485500704-8e990f9900f7?auto=format&fit=crop&w=600&q=80',
+    image: '/images/products/spices-mehran-turmeric-haldi-200g.svg',
   },
   {
     id: 'spices-whole-cumin-safaid-zeera-100g',
@@ -423,7 +423,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Selected aromatic whole white cumin seeds for tarka and aromatic rice tempering.',
     tags: ['zeera', 'cumin', 'spices', 'tarka', 'aroma'],
     isSamplePrice: true,
-    image: 'https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&w=600&q=80',
+    image: '/images/products/spices-whole-cumin-safaid-zeera-100g.svg',
   },
 
   // 5. Tea, Sugar & Beverages (چائے، چینی و دودھ)
@@ -444,7 +444,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Signature granular Kenyan blend with robust flavor, bright amber infusion, and strong aroma.',
     tags: ['tea', 'chai', 'tapal', 'danedar', 'beverages'],
     isSamplePrice: true,
-    image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80',
+    image: '/images/products/beverages-tapal-danedar-tea-430g.svg',
   },
   {
     id: 'beverages-refined-white-sugar-1kg',
@@ -461,7 +461,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Crystal white refined sugar, uniform clean grains for tea, desserts, and baking.',
     tags: ['sugar', 'cheeni', 'sweetener', 'tea'],
     isSamplePrice: true,
-    image: 'https://images.unsplash.com/photo-1581441363689-1f3c3c414635?auto=format&fit=crop&w=600&q=80',
+    image: '/images/products/beverages-refined-white-sugar-1kg.svg',
   },
   {
     id: 'beverages-olpers-full-cream-milk-1l',
@@ -479,7 +479,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Wholesome full cream standardized milk processed through state-of-the-art UHT standards.',
     tags: ['milk', 'olpers', 'doodh', 'dairy', 'beverages'],
     isSamplePrice: true,
-    image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=600&q=80',
+    image: '/images/products/beverages-olpers-full-cream-milk-1l.svg',
   },
 ]
 
