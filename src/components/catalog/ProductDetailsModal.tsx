@@ -105,7 +105,12 @@ export const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
               className="w-full h-full object-cover"
               loading="lazy"
               onError={(e) => {
-                e.currentTarget.style.display = 'none'
+                const target = e.currentTarget
+                if (target.src.endsWith('.jpg')) {
+                  target.src = target.src.replace('.jpg', '.svg')
+                } else {
+                  target.style.display = 'none'
+                }
               }}
             />
           </div>

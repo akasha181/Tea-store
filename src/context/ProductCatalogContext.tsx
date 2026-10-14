@@ -3,7 +3,7 @@ import { INITIAL_PRODUCTS } from '../data/products'
 import type { Product } from '../types'
 import { ProductCatalogContext } from './catalogContext'
 
-const CATALOG_STORAGE_KEY = 'hafiz_g_catalog_v5'
+const CATALOG_STORAGE_KEY = 'hafiz_g_catalog_v6'
 
 function loadSavedCatalog(): Product[] {
   if (typeof window === 'undefined') return INITIAL_PRODUCTS

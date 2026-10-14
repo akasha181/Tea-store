@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Card } from '../ui/Card'
 import { Badge } from '../ui/Badge'
 import { Button } from '../ui/Button'
@@ -84,6 +84,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const [isEditingPrice, setIsEditingPrice] = useState(false)
   const [customPrice, setCustomPrice] = useState<string>(product.price.toString())
   const [imageError, setImageError] = useState(false)
+  const [imgSrc, setImgSrc] = useState(product.image)
+
+  useEffect(() => {
+    setImgSrc(product.image)
+    setImageError(false)
+  }, [product.image])
 
   const isAvailable = product.inStock && product.stockQuantity > 0
   const artwork = getCategoryArtwork(product.category)
@@ -122,12 +128,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <div
           className={`h-36 rounded-xl bg-gradient-to-br ${artwork.bg} border flex flex-col items-center justify-center relative p-3 overflow-hidden transition-transform group-hover:scale-[1.02] motion-reduce:group-hover:scale-100`}
         >
-          {product.image && !imageError ? (
+          {imgSrc && !imageError ? (
             <img
-              src={product.image}
+              src={imgSrc}
               alt={product.name}
               loading="lazy"
-              onError={() => setImageError(true)}
+              onError={() => {
+                if (imgSrc.endsWith('.jpg')) {
+                  setImgSrc(imgSrc.replace('.jpg', '.svg'))
+                } else {
+                  setImageError(true)
+                }
+              }}
               className="absolute inset-0 w-full h-full object-cover z-0 transition-transform duration-300 group-hover:scale-105"
             />
           ) : (
