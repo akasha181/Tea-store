@@ -29,8 +29,6 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onNavigateToCheckout }) 
     subtotal,
     deliveryFee,
     totalAmount,
-    isFreeDelivery,
-    amountNeededForFreeDelivery,
     isCartOpen,
     closeCart,
     incrementQuantity,
@@ -71,14 +69,12 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onNavigateToCheckout }) 
       msg += `${index + 1}. ${item.product.name} (${item.product.unit}) x ${item.quantity} = Rs. ${item.product.price * item.quantity}\n`
     })
     msg += `\n*Subtotal:* Rs. ${subtotal}`
-    msg += `\n*Delivery Fee:* ${deliveryFee === 0 ? 'FREE' : `Rs. ${deliveryFee}`}`
+    msg += `\n*Delivery Fee:* Rs. ${deliveryFee}`
     msg += `\n*Total Payable:* Rs. ${totalAmount}`
     msg += `\n*(Note: Prices listed are subject to daily verification by ${STORE_INFO.name} store owner)*`
     msg += `\n\nPlease confirm delivery to my address. JazakAllah!`
     return encodeURIComponent(msg)
   }
-
-  const freeDeliveryProgress = Math.min(100, Math.round((subtotal / 1000) * 100))
 
   return (
     <div
@@ -131,33 +127,19 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onNavigateToCheckout }) 
             </button>
           </div>
 
-          {/* Free Delivery Meter */}
-          <div className="bg-white px-4 py-3 border-b border-cream-200 shrink-0 space-y-1.5 shadow-2xs">
+          {/* Delivery Fee Notice */}
+          <div className="bg-white px-4 py-3 border-b border-cream-200 shrink-0 space-y-1 shadow-2xs">
             <div className="flex items-center justify-between text-xs">
-              {isFreeDelivery ? (
-                <span className="text-forest-700 font-bold flex items-center gap-1.5">
-                  <Truck className="w-4 h-4 text-lime-dark" />
-                  <span>🎉 Free Local Doorstep Delivery Unlocked!</span>
-                </span>
-              ) : (
-                <span className="text-forest-800">
-                  Add <strong className="text-forest-950">Rs. {amountNeededForFreeDelivery}</strong> more for <strong>Free Delivery</strong>
-                </span>
-              )}
-              <Badge variant={isFreeDelivery ? 'lime' : 'cream'} size="sm">
-                {isFreeDelivery ? 'FREE' : 'Rs. 100 Fee'}
+              <span className="text-forest-900 font-bold flex items-center gap-1.5">
+                <Truck className="w-4 h-4 text-forest-700" />
+                <span>Doorstep Delivery (ہوم ڈیلیوری)</span>
+              </span>
+              <Badge variant="cream" size="sm" className="font-bold text-forest-950">
+                Rs. 200
               </Badge>
             </div>
-
-            {/* Progress Bar */}
-            <div className="w-full bg-cream-200 h-2 rounded-full overflow-hidden">
-              <div
-                className="bg-lime-brand h-full rounded-full transition-all duration-300 motion-reduce:transition-none"
-                style={{ width: `${freeDeliveryProgress}%` }}
-              />
-            </div>
-            <p className="text-[11px] text-forest-700/70">
-              Free delivery threshold: Rs. 1,000 within Civil Bazaar &amp; K-152 vicinity.
+            <p className="text-[11px] text-forest-700/80">
+              Standard local delivery fee: Rs. 200 (Store pickup at counter is free).
             </p>
           </div>
 
@@ -326,13 +308,9 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onNavigateToCheckout }) 
                   <span className="font-bold text-forest-950">Rs. {subtotal}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Local Delivery:</span>
-                  <span className="font-bold">
-                    {deliveryFee === 0 ? (
-                      <span className="text-forest-700">FREE</span>
-                    ) : (
-                      `Rs. ${deliveryFee}`
-                    )}
+                  <span>Home Delivery (Standard):</span>
+                  <span className="font-bold text-forest-950">
+                    Rs. {deliveryFee}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm sm:text-base font-black text-forest-950 pt-2 border-t border-cream-200">

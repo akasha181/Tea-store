@@ -15,7 +15,7 @@ export interface WhatsAppOrderPayload {
  * Builds a structured, beautifully formatted WhatsApp order message in English & Urdu.
  */
 export function buildWhatsAppOrderMessage(payload: WhatsAppOrderPayload): string {
-  const { orderId, customer, items, subtotal, deliveryFee, totalAmount, isFreeDelivery } = payload
+  const { orderId, customer, items, subtotal, deliveryFee, totalAmount } = payload
 
   const now = new Date()
   const dateFormatted = now.toLocaleDateString('en-GB', {
@@ -53,9 +53,7 @@ export function buildWhatsAppOrderMessage(payload: WhatsAppOrderPayload): string
   const deliveryFeeText =
     customer.deliveryMethod === 'pickup'
       ? 'Rs. 0 (Store Pickup)'
-      : isFreeDelivery
-        ? 'FREE (🎉 Local Delivery Over Rs. 1,000)'
-        : `Rs. ${deliveryFee}`
+      : `Rs. ${deliveryFee} (Standard Doorstep Delivery)`
 
   const messageLines = [
     `🛒 *${STORE_INFO.name.toUpperCase()} - NEW ORDER*`,

@@ -3,7 +3,7 @@ import { INITIAL_PRODUCTS } from '../data/products'
 import type { Product } from '../types'
 import { ProductCatalogContext } from './catalogContext'
 
-const CATALOG_STORAGE_KEY = 'hafiz_g_catalog_v2'
+const CATALOG_STORAGE_KEY = 'hafiz_g_catalog_v3'
 
 function loadSavedCatalog(): Product[] {
   if (typeof window === 'undefined') return INITIAL_PRODUCTS
@@ -12,7 +12,13 @@ function loadSavedCatalog(): Product[] {
     if (!raw) return INITIAL_PRODUCTS
     const parsed = JSON.parse(raw)
     if (Array.isArray(parsed) && parsed.length > 0) {
-      return parsed
+      return parsed.map((item: Product) => {
+        const initialMatch = INITIAL_PRODUCTS.find((p) => p.id === item.id)
+        if (initialMatch && (!item.image || item.image.trim() === '')) {
+          return { ...item, image: initialMatch.image }
+        }
+        return item
+      })
     }
     return INITIAL_PRODUCTS
   } catch {

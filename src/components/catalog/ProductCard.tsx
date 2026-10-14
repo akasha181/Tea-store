@@ -83,6 +83,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const [isJustAdded, setIsJustAdded] = useState(false)
   const [isEditingPrice, setIsEditingPrice] = useState(false)
   const [customPrice, setCustomPrice] = useState<string>(product.price.toString())
+  const [imageError, setImageError] = useState(false)
 
   const isAvailable = product.inStock && product.stockQuantity > 0
   const artwork = getCategoryArtwork(product.category)
@@ -119,35 +120,35 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       {/* 1. Visual Image Banner & Badge */}
       <div className="space-y-3">
         <div
-          className={`h-32 rounded-xl bg-gradient-to-br ${artwork.bg} border flex flex-col items-center justify-center relative p-3 overflow-hidden transition-transform group-hover:scale-[1.02] motion-reduce:group-hover:scale-100`}
+          className={`h-36 rounded-xl bg-gradient-to-br ${artwork.bg} border flex flex-col items-center justify-center relative p-3 overflow-hidden transition-transform group-hover:scale-[1.02] motion-reduce:group-hover:scale-100`}
         >
-          {product.image && (
+          {product.image && !imageError ? (
             <img
               src={product.image}
               alt={product.name}
               loading="lazy"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none'
-              }}
-              className="absolute inset-0 w-full h-full object-cover z-0 opacity-90 transition-opacity group-hover:opacity-100"
+              onError={() => setImageError(true)}
+              className="absolute inset-0 w-full h-full object-cover z-0 transition-transform duration-300 group-hover:scale-105"
             />
+          ) : (
+            <>
+              {/* Category Graphic Fallback / Base */}
+              <div className="relative z-1 p-3 bg-white/80 backdrop-blur-xs rounded-2xl shadow-xs">
+                {artwork.icon}
+              </div>
+              <span className="relative z-1 text-[10px] font-bold uppercase tracking-wider mt-1 opacity-70">
+                {artwork.label}
+              </span>
+            </>
           )}
 
-          {/* Category Graphic Fallback / Base */}
-          <div className="relative z-1 p-3 bg-white/80 backdrop-blur-xs rounded-2xl shadow-xs">
-            {artwork.icon}
-          </div>
-          <span className="relative z-1 text-[10px] font-bold uppercase tracking-wider mt-1 opacity-70">
-            {artwork.label}
-          </span>
-
           {/* Top Unit Pill */}
-          <span className="absolute top-2.5 left-2.5 text-[11px] font-bold text-forest-900 bg-white/90 backdrop-blur-xs border border-white/60 px-2.5 py-0.5 rounded-lg shadow-2xs">
+          <span className="absolute top-2.5 left-2.5 text-[11px] font-bold text-forest-900 bg-white/90 backdrop-blur-xs border border-white/60 px-2.5 py-0.5 rounded-lg shadow-2xs z-2">
             {product.unit}
           </span>
 
           {/* Feature Badges */}
-          <div className="absolute top-2.5 right-2.5 flex flex-col items-end gap-1">
+          <div className="absolute top-2.5 right-2.5 flex flex-col items-end gap-1 z-2">
             {product.badge && (
               <Badge variant="lime" size="sm">
                 {product.badge}

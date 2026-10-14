@@ -105,7 +105,7 @@ export const Hero3DSection: React.FC<Hero3DSectionProps> = ({ onExploreClick }) 
           <div className="pt-4 border-t border-forest-800/80 grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs text-cream-200">
             <div className="flex items-center gap-2">
               <Truck className="w-4 h-4 text-lime-brand shrink-0" />
-              <span>Free Delivery &gt; Rs. 1,000</span>
+              <span>Doorstep Delivery: Rs. 200</span>
             </div>
             <div className="flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-lime-brand shrink-0" />

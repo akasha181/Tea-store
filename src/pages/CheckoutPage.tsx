@@ -83,8 +83,6 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
     items,
     subtotal,
     deliveryFee: standardDeliveryFee,
-    isFreeDelivery,
-    amountNeededForFreeDelivery,
     incrementQuantity,
     decrementQuantity,
     setQuantity,
@@ -242,7 +240,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
       subtotal,
       deliveryFee: activeDeliveryFee,
       totalAmount: activeTotalAmount,
-      isFreeDelivery: isPickup || isFreeDelivery,
+      isFreeDelivery: isPickup,
     }
 
     const whatsappUrl = buildWhatsAppUrl(payload)
@@ -256,7 +254,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
       subtotal,
       deliveryFee: activeDeliveryFee,
       totalAmount: activeTotalAmount,
-      isFreeDelivery: isPickup || isFreeDelivery,
+      isFreeDelivery: isPickup,
       status: 'pending',
       whatsappLink: whatsappUrl,
     }
@@ -451,10 +449,8 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                     <p className="text-xs font-urdu font-medium text-forest-700">
                       گھر پر فوری ڈیلیوری
                     </p>
-                    <p className="text-[11px] text-forest-700/80 mt-1">
-                      {isFreeDelivery
-                        ? '🎉 Free Delivery Unlocked'
-                        : 'Rs. 100 Fee (Free on Rs. 1,000+)'}
+                    <p className="text-[11px] text-forest-700 font-bold mt-1">
+                      Rs. 200 Standard Delivery Fee
                     </p>
                   </div>
                 </button>
@@ -821,32 +817,22 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
               </Badge>
             </div>
 
-            {/* Free Delivery Meter */}
-            {!isPickup && (
-              <div className="p-3.5 rounded-2xl bg-cream-50 border border-cream-200 space-y-2">
-                <div className="flex items-center justify-between text-xs">
-                  {isFreeDelivery ? (
-                    <span className="text-forest-700 font-bold flex items-center gap-1.5">
-                      <Truck className="w-4 h-4 text-lime-dark" />
-                      <span>🎉 Free Doorstep Delivery Unlocked!</span>
-                    </span>
-                  ) : (
-                    <span className="text-forest-800">
-                      Add <strong className="text-forest-950">Rs. {amountNeededForFreeDelivery}</strong> more for Free Delivery
-                    </span>
-                  )}
-                  <span className="font-bold text-forest-950">
-                    {isFreeDelivery ? 'FREE' : 'Rs. 100'}
-                  </span>
+            {/* Delivery Fee Notice */}
+            {!isPickup ? (
+              <div className="p-3 rounded-2xl bg-cream-50 border border-cream-200 flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2 text-forest-800">
+                  <Truck className="w-4 h-4 text-forest-700 shrink-0" />
+                  <span>Doorstep Home Delivery (ہوم ڈیلیوری):</span>
                 </div>
-                <div className="w-full bg-cream-200 h-2 rounded-full overflow-hidden">
-                  <div
-                    className="bg-lime-brand h-full rounded-full transition-all duration-300"
-                    style={{
-                      width: `${Math.min(100, Math.round((subtotal / 1000) * 100))}%`,
-                    }}
-                  />
+                <span className="font-bold text-forest-950">Rs. {activeDeliveryFee}</span>
+              </div>
+            ) : (
+              <div className="p-3 rounded-2xl bg-cream-50 border border-cream-200 flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2 text-forest-800">
+                  <Store className="w-4 h-4 text-forest-700 shrink-0" />
+                  <span>Store Counter Pickup (دکان سے وصولی):</span>
                 </div>
+                <span className="font-bold text-forest-700">Rs. 0 (Free)</span>
               </div>
             )}
 
@@ -952,8 +938,6 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 <span className="font-bold">
                   {isPickup ? (
                     <span className="text-forest-700">Rs. 0 (Store Pickup)</span>
-                  ) : isFreeDelivery ? (
-                    <span className="text-forest-700">FREE</span>
                   ) : (
                     `Rs. ${activeDeliveryFee}`
                   )}

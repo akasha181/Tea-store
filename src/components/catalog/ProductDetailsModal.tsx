@@ -96,6 +96,21 @@ export const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
           </button>
         </div>
 
+        {/* Product Image */}
+        {product.image && (
+          <div className="w-full h-48 sm:h-56 rounded-2xl overflow-hidden bg-cream-100 border border-cream-200 relative shadow-inner">
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-full h-full object-cover"
+              loading="lazy"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none'
+              }}
+            />
+          </div>
+        )}
+
         {/* Rating */}
         {product.rating && (
           <div className="flex items-center gap-2 text-xs text-amber-600 font-bold bg-amber-50/80 px-3 py-1.5 rounded-xl border border-amber-200">

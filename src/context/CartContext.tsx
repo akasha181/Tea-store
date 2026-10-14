@@ -4,8 +4,7 @@ import { useProductCatalog } from './useProductCatalog'
 import type { CartItem, CartNotification, Product } from '../types'
 
 const CART_STORAGE_KEY = 'hafiz_jee_cart_storage_v1'
-const FREE_DELIVERY_THRESHOLD = 1000
-const STANDARD_DELIVERY_FEE = 100
+const STANDARD_DELIVERY_FEE = 200
 
 interface RawCartEntry {
   productId: string
@@ -115,10 +114,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [items])
 
-  const isFreeDelivery = subtotal >= FREE_DELIVERY_THRESHOLD
-  const deliveryFee = subtotal === 0 ? 0 : isFreeDelivery ? 0 : STANDARD_DELIVERY_FEE
+  const isFreeDelivery = false
+  const deliveryFee = subtotal === 0 ? 0 : STANDARD_DELIVERY_FEE
   const totalAmount = subtotal + deliveryFee
-  const amountNeededForFreeDelivery = Math.max(0, FREE_DELIVERY_THRESHOLD - subtotal)
+  const amountNeededForFreeDelivery = 0
 
   // Add Product to Cart with Strict Stock Validation
   const addToCart = useCallback(

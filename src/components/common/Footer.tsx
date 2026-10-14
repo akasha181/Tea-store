@@ -147,7 +147,7 @@ export const Footer: React.FC = () => {
               <li>• Jamia Masjid & Surrounding Streets</li>
               <li>• Model Town & Satellite Enclave</li>
               <li className="pt-2 text-lime-brand text-xs font-semibold">
-                ✓ Free delivery on orders above Rs. 1,000
+                ✓ Standard home delivery at Rs. 200 (Store Pickup Free)
               </li>
             </ul>
           </div>
