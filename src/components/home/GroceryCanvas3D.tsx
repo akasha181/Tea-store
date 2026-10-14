@@ -431,9 +431,9 @@ export const GroceryCanvas3D: React.FC<GroceryCanvas3DProps> = ({ className = ''
           <div className="w-20 h-20 rounded-2xl bg-forest-700 text-lime-brand flex items-center justify-center text-3xl font-bold font-urdu mb-3 shadow-md">
             ح
           </div>
-          <h4 className="font-bold text-forest-900 text-sm">Hafiz Jee 3D Store</h4>
+          <h4 className="font-bold text-forest-900 text-sm">Hafiz G 3D Store</h4>
           <p className="text-xs text-forest-700/70 mt-1">
-            G Civil Bazaar, K-152 • Fresh Chakki Atta & Pure Ghee
+            G Civil Bazaar, K-152 • Fresh Chakki Atta & Pure Chai
           </p>
         </div>
       </div>

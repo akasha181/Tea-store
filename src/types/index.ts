@@ -74,7 +74,13 @@ export interface PhoneValidationResult {
   errorMessage?: string
 }
 
-export type OrderStatus = 'pending' | 'confirmed' | 'completed' | 'cancelled'
+export type OrderStatus =
+  | 'pending'
+  | 'confirmed'
+  | 'packaging'
+  | 'out_for_delivery'
+  | 'completed'
+  | 'cancelled'
 
 export interface OrderRecord {
   orderId: string

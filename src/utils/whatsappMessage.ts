@@ -58,7 +58,7 @@ export function buildWhatsAppOrderMessage(payload: WhatsAppOrderPayload): string
         : `Rs. ${deliveryFee}`
 
   const messageLines = [
-    `🛒 *HAFIZ JEE KIRYANA STORE - NEW ORDER*`,
+    `🛒 *${STORE_INFO.name.toUpperCase()} - NEW ORDER*`,
     `📍 *Store Location:* ${STORE_INFO.address}`,
     `📞 *Hotline:* ${STORE_INFO.phone}`,
     `━━━━━━━━━━━━━━━━━━`,

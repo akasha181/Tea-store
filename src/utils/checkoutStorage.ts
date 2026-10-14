@@ -1,7 +1,9 @@
-import type { CustomerDetails, OrderRecord, OrderStatus } from '../types'
+import type { CustomerDetails, OrderRecord, OrderStatus, StoreInfo } from '../types'
+import { STORE_INFO } from '../data/products'
 
 const CUSTOMER_INFO_STORAGE_KEY = 'hafiz_jee_customer_info_v1'
 const ORDER_HISTORY_STORAGE_KEY = 'hafiz_jee_order_history_v1'
+const STORE_SETTINGS_STORAGE_KEY = 'hafiz_g_store_settings_v2'
 
 export const DEFAULT_CUSTOMER_DETAILS: CustomerDetails = {
   fullName: '',
@@ -119,6 +121,7 @@ export function saveOrderToHistory(order: OrderRecord): void {
     const filtered = existing.filter((o) => o.orderId !== order.orderId)
     const updated = [order, ...filtered].slice(0, 50) // Keep up to 50 recent orders
     localStorage.setItem(ORDER_HISTORY_STORAGE_KEY, JSON.stringify(updated))
+    window.dispatchEvent(new CustomEvent('hafiz_new_order_placed', { detail: order }))
   } catch {
     // Ignore storage quota errors
   }
@@ -146,6 +149,11 @@ export function updateOrderStatus(
     }
 
     localStorage.setItem(ORDER_HISTORY_STORAGE_KEY, JSON.stringify(orders))
+    window.dispatchEvent(
+      new CustomEvent('hafiz_order_status_changed', {
+        detail: { orderId, newStatus, ownerNotes },
+      })
+    )
     return true
   } catch {
     return false
@@ -345,4 +353,55 @@ export function seedSampleOrdersIfEmpty(): OrderRecord[] {
   }
 
   return sampleOrders
+}
+
+/**
+ * Loads editable store settings from localStorage, falling back to STORE_INFO
+ */
+export function loadStoreSettings(): StoreInfo {
+  if (typeof window === 'undefined') return STORE_INFO
+  try {
+    const raw = localStorage.getItem(STORE_SETTINGS_STORAGE_KEY)
+    if (!raw) return STORE_INFO
+    const parsed = JSON.parse(raw)
+    if (!parsed || typeof parsed !== 'object') return STORE_INFO
+    return {
+      ...STORE_INFO,
+      ...parsed,
+    }
+  } catch {
+    return STORE_INFO
+  }
+}
+
+/**
+ * Saves store settings and dispatches notification event
+ */
+export function saveStoreSettings(settings: StoreInfo): void {
+  if (typeof window === 'undefined') return
+  try {
+    localStorage.setItem(STORE_SETTINGS_STORAGE_KEY, JSON.stringify(settings))
+    window.dispatchEvent(
+      new CustomEvent('hafiz_store_settings_updated', { detail: settings })
+    )
+  } catch {
+    // Ignore quota errors
+  }
+}
+
+/**
+ * Resets store settings to original defaults
+ */
+export function resetStoreSettings(): StoreInfo {
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.removeItem(STORE_SETTINGS_STORAGE_KEY)
+      window.dispatchEvent(
+        new CustomEvent('hafiz_store_settings_updated', { detail: STORE_INFO })
+      )
+    } catch {
+      // Ignore
+    }
+  }
+  return STORE_INFO
 }

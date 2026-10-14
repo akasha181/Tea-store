@@ -1,16 +1,16 @@
 import type { Product, Category, StoreInfo } from '../types'
 
 export const STORE_INFO: StoreInfo = {
-  name: 'Hafiz Jee Kiryana Store',
-  urduName: 'حافظ جی کریانہ سٹور',
-  tagline: 'خالص اور معیاری اشیاء کی ضمانت • Trusted Since 2008',
+  name: 'Hafiz G Chai and Karyana Store',
+  urduName: 'حافظ جی چائے اور کریانہ سٹور',
+  tagline: 'خالص چائے اور معیاری کریانہ • آپ کے گھر تک سامان ہماری ذمہ داری',
   address: 'G Civil Bazaar, K-152',
   phone: (import.meta.env?.VITE_STORE_PHONE as string) || '0300-1234567',
   whatsapp: (import.meta.env?.VITE_STORE_WHATSAPP as string) || '923001234567',
   timing: '8:00 AM – 11:00 PM (Daily)',
   deliveryNotice: 'Free 30–45 Mins Local Delivery on Orders over Rs. 1,000',
   samplePriceDisclaimer:
-    'All prices are sample retail estimates in PKR subject to daily mandi rate verification by Hafiz Jee Kiryana Store owner (G Civil Bazaar, K-152). Final order price confirmed upon delivery.',
+    'All prices are sample retail estimates in PKR subject to daily mandi rate verification by Hafiz G Chai and Karyana Store owner (G Civil Bazaar, K-152). Final order price confirmed upon delivery.',
 }
 
 export const CATEGORIES: (Category & {
@@ -486,7 +486,7 @@ export const STORE_PROMOTIONS: PromotionItem[] = [
     tag: 'Neighborhood Service',
     highlight: 'Free on Orders over Rs. 1,000',
     description: 'Place your grocery order online or on WhatsApp and our rider delivers directly to your door at G Civil Bazaar, K-152.',
-    whatsAppPrompt: 'Assalam-o-Alaikum Hafiz Jee, I would like to order groceries with Free Home Delivery to my address.',
+    whatsAppPrompt: 'Assalam-o-Alaikum Hafiz G, I would like to order groceries with Free Home Delivery to my address.',
     bgGradient: 'from-forest-900 via-forest-800 to-forest-950',
     accentColor: 'text-lime-brand',
   },
@@ -498,7 +498,7 @@ export const STORE_PROMOTIONS: PromotionItem[] = [
     tag: 'Wholesale Mandi Rates',
     highlight: 'Complete Household Essentials',
     description: 'Everything your kitchen needs for the whole month pre-packed with verified pure quality and accurate weight.',
-    whatsAppPrompt: 'Assalam-o-Alaikum Hafiz Jee, please share the current Monthly Ration Package details and price.',
+    whatsAppPrompt: 'Assalam-o-Alaikum Hafiz G, please share the current Monthly Ration Package details and price.',
     bgGradient: 'from-forest-800 via-emerald-900 to-forest-900',
     accentColor: 'text-amber-300',
   },
@@ -510,7 +510,7 @@ export const STORE_PROMOTIONS: PromotionItem[] = [
     tag: 'No Chemicals / No Preservatives',
     highlight: 'Official Government Mandi Rate',
     description: 'Ground fresh daily from certified wheat grain. Soft rotis guaranteed without mixing.',
-    whatsAppPrompt: 'Assalam-o-Alaikum Hafiz Jee, I want to order a 10 kg / 20 kg bag of Fresh Chakki Atta.',
+    whatsAppPrompt: 'Assalam-o-Alaikum Hafiz G, I want to order a 10 kg / 20 kg bag of Fresh Chakki Atta.',
     bgGradient: 'from-forest-950 via-forest-900 to-teal-950',
     accentColor: 'text-lime-accent',
   },

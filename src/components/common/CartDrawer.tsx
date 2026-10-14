@@ -66,14 +66,14 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onNavigateToCheckout }) 
 
   // Pre-format WhatsApp order text
   const generateWhatsAppMessage = () => {
-    let msg = `*Assalam-o-Alaikum Hafiz Jee Kiryana Store (${STORE_INFO.address})*,\nI would like to place an order from my shopping basket:\n\n`
+    let msg = `*Assalam-o-Alaikum ${STORE_INFO.name} (${STORE_INFO.address})*,\nI would like to place an order from my shopping basket:\n\n`
     items.forEach((item, index) => {
       msg += `${index + 1}. ${item.product.name} (${item.product.unit}) x ${item.quantity} = Rs. ${item.product.price * item.quantity}\n`
     })
     msg += `\n*Subtotal:* Rs. ${subtotal}`
     msg += `\n*Delivery Fee:* ${deliveryFee === 0 ? 'FREE' : `Rs. ${deliveryFee}`}`
     msg += `\n*Total Payable:* Rs. ${totalAmount}`
-    msg += `\n*(Note: Prices listed are sample rates subject to daily verification by Hafiz Jee owner)*`
+    msg += `\n*(Note: Prices listed are subject to daily verification by ${STORE_INFO.name} store owner)*`
     msg += `\n\nPlease confirm delivery to my address. JazakAllah!`
     return encodeURIComponent(msg)
   }

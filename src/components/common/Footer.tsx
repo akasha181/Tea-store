@@ -75,21 +75,21 @@ export const Footer: React.FC = () => {
               </div>
               <div>
                 <h3 className="font-extrabold text-white text-lg tracking-tight">
-                  Hafiz Jee Kiryana Store
+                  {STORE_INFO.name}
                 </h3>
                 <p className="text-xs text-lime-brand font-medium">
-                  حافظ جی کریانہ سٹور • خالص اور معیاری
+                  {STORE_INFO.urduName} • خالص اور معیاری
                 </p>
               </div>
             </div>
 
             <p className="text-xs sm:text-sm text-cream-200/80 leading-relaxed max-w-md">
-              Serving our community with unadulterated essentials, wholesale mandi rates, and instant home deliveries. Your trust is our greatest asset.
+              Serving our community with unadulterated essentials, premium chai blends, wholesale mandi rates, and instant home deliveries. Your trust is our greatest asset.
             </p>
 
             <div className="pt-2 flex flex-wrap gap-2">
               <a
-                href={`https://wa.me/${STORE_INFO.whatsapp}?text=Assalam-o-Alaikum%20Hafiz%20Jee`}
+                href={`https://wa.me/${STORE_INFO.whatsapp}?text=Assalam-o-Alaikum%20Hafiz%20G`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-lime-brand hover:bg-lime-accent text-forest-950 font-bold px-3.5 py-2 rounded-xl text-xs transition-colors shadow-2xs"
@@ -166,7 +166,7 @@ export const Footer: React.FC = () => {
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-lime-brand shrink-0" />
-                <span>hafizjee.store@example.com</span>
+                <span>hafizg.store@example.com</span>
               </li>
             </ul>
           </div>
@@ -175,10 +175,10 @@ export const Footer: React.FC = () => {
         {/* 3. Bottom Bar */}
         <div className="border-t border-forest-900 mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-cream-300/60 pb-16 sm:pb-0">
           <div>
-            © {CURRENT_YEAR} Hafiz Jee Kiryana Store. All rights reserved.
+            © {CURRENT_YEAR} {STORE_INFO.name}. All rights reserved.
           </div>
           <div className="flex items-center gap-4 text-xs font-urdu text-lime-accent">
-            <span>خالص اور باوقار سودا سلف ہر گھر کی دہلیز تک</span>
+            <span>آپ کے گھر تک سامان ہماری ذمہ داری</span>
           </div>
         </div>
       </div>

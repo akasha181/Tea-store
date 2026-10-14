@@ -12,6 +12,9 @@ const CheckoutPage = lazy(() =>
 const OrdersPage = lazy(() =>
   import('./pages/OrdersPage').then((m) => ({ default: m.OrdersPage }))
 )
+const AdminPage = lazy(() =>
+  import('./pages/AdminPage').then((m) => ({ default: m.AdminPage }))
+)
 
 function PageLoadingFallback() {
   return (
@@ -25,18 +28,21 @@ function PageLoadingFallback() {
       </div>
       <div className="flex items-center gap-2 text-xs font-bold text-forest-800">
         <span className="w-2 h-2 rounded-full bg-lime-brand animate-ping" />
-        <span>Loading Hafiz Jee Groceries (لوڈ ہو رہا ہے)...</span>
+        <span>Loading Hafiz G Groceries (لوڈ ہو رہا ہے)...</span>
       </div>
     </div>
   )
 }
 
 function parseCurrentRoute(): {
-  page: 'home' | 'checkout' | 'orders'
+  page: 'home' | 'checkout' | 'orders' | 'admin'
   orderId?: string
 } {
   if (typeof window === 'undefined') return { page: 'home' }
   const hash = window.location.hash.toLowerCase()
+  if (hash.startsWith('#admin')) {
+    return { page: 'admin' }
+  }
   if (hash.startsWith('#checkout')) {
     return { page: 'checkout' }
   }
@@ -54,7 +60,7 @@ function parseCurrentRoute(): {
 
 function AppContent() {
   const { addToCart } = useCart()
-  const [currentPage, setCurrentPage] = useState<'home' | 'checkout' | 'orders'>(() => {
+  const [currentPage, setCurrentPage] = useState<'home' | 'checkout' | 'orders' | 'admin'>(() => {
     return parseCurrentRoute().page
   })
   const [activeOrderId, setActiveOrderId] = useState<string | undefined>(() => {
@@ -94,6 +100,12 @@ function AppContent() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  const navigateToAdmin = () => {
+    setCurrentPage('admin')
+    window.location.hash = 'admin'
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   const navigateHome = () => {
     setCurrentPage('home')
     if (window.location.hash) {
@@ -121,9 +133,15 @@ function AppContent() {
       onNavigateHome={navigateHome}
       onNavigateToCheckout={navigateToCheckout}
       onNavigateToOrders={navigateToOrders}
+      onNavigateToAdmin={navigateToAdmin}
     >
       <Suspense fallback={<PageLoadingFallback />}>
-        {currentPage === 'checkout' ? (
+        {currentPage === 'admin' ? (
+          <AdminPage
+            onNavigateHome={navigateHome}
+            onNavigateToOrders={navigateToOrders}
+          />
+        ) : currentPage === 'checkout' ? (
           <CheckoutPage
             onNavigateHome={navigateHome}
             onNavigateToCategory={handleCategorySelectFromOtherPage}

@@ -11,6 +11,7 @@ import {
   Truck,
   Sparkles,
   FileText,
+  ShieldCheck,
 } from 'lucide-react'
 import { Badge } from '../ui/Badge'
 import { Button } from '../ui/Button'
@@ -25,7 +26,8 @@ export interface HeaderProps {
   onCartClick?: () => void
   onLogoClick?: () => void
   onNavigateToOrders?: () => void
-  currentPage?: 'home' | 'checkout' | 'orders'
+  onNavigateToAdmin?: () => void
+  currentPage?: 'home' | 'checkout' | 'orders' | 'admin'
 }
 
 const AISLE_LINKS = [
@@ -46,6 +48,7 @@ export const Header: React.FC<HeaderProps> = ({
   onCartClick,
   onLogoClick,
   onNavigateToOrders,
+  onNavigateToAdmin,
   currentPage = 'home',
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -81,7 +84,7 @@ export const Header: React.FC<HeaderProps> = ({
             </span>
           </div>
 
-          {/* Right: Orders, Phone & Urdu Tagline */}
+          {/* Right: Orders, Admin Portal & Phone */}
           <div className="flex items-center gap-2 sm:gap-3">
             <button
               type="button"
@@ -91,10 +94,24 @@ export const Header: React.FC<HeaderProps> = ({
                   ? 'bg-lime-brand text-forest-950 shadow-2xs'
                   : 'text-cream-100 hover:text-lime-brand bg-forest-900 border border-forest-800 hover:border-forest-700'
               }`}
-              title="Track orders and view store dashboard"
+              title="Track orders and view customer dashboard"
             >
               <FileText className="w-3.5 h-3.5 text-lime-brand" />
-              <span>Orders &amp; Tracking (آرڈرز)</span>
+              <span>Orders (آرڈرز)</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={onNavigateToAdmin}
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                currentPage === 'admin'
+                  ? 'bg-amber-400 text-forest-950 shadow-2xs'
+                  : 'text-amber-200 hover:text-white bg-forest-900 border border-amber-500/40 hover:border-amber-400'
+              }`}
+              title="Admin Control Panel & Order Management"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-amber-300" />
+              <span>Admin Portal (ایڈمن)</span>
             </button>
 
             <a
@@ -120,7 +137,7 @@ export const Header: React.FC<HeaderProps> = ({
               if (e.key === 'Enter' || e.key === ' ') onLogoClick?.()
             }}
             className="flex items-center gap-3 shrink-0 cursor-pointer select-none group"
-            title="Return to Hafiz Jee Kiryana Store Homepage"
+            title={`Return to ${STORE_INFO.name} Homepage`}
           >
             <div className="w-11 h-11 rounded-2xl bg-forest-700 group-hover:bg-forest-800 transition-colors flex items-center justify-center text-cream-100 font-bold text-2xl shadow-forest-md border border-forest-600/40 relative">
               <span className="font-urdu leading-none">ح</span>
@@ -130,14 +147,14 @@ export const Header: React.FC<HeaderProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-lg sm:text-xl font-extrabold text-forest-950 tracking-tight leading-tight group-hover:text-forest-800 transition-colors">
-                  Hafiz Jee Kiryana Store
+                  {STORE_INFO.name}
                 </h1>
                 <Badge variant="lime" size="sm" className="hidden sm:inline-flex">
                   خالص کوالٹی
                 </Badge>
               </div>
               <p className="text-xs text-forest-700/70 font-medium">
-                Fresh Groceries &amp; Household Essentials • حافظ جی کریانہ سٹور
+                Fresh Groceries &amp; Household Essentials • {STORE_INFO.urduName}
               </p>
             </div>
           </div>
@@ -285,9 +302,9 @@ export const Header: React.FC<HeaderProps> = ({
                   </div>
                   <div>
                     <h2 className="font-bold text-forest-950 text-sm">
-                      Hafiz Jee Kiryana
+                      {STORE_INFO.name}
                     </h2>
-                    <p className="text-[11px] text-forest-700">حافظ جی کریانہ سٹور</p>
+                    <p className="text-[11px] text-forest-700">{STORE_INFO.urduName}</p>
                   </div>
                 </div>
                 <button
@@ -347,7 +364,19 @@ export const Header: React.FC<HeaderProps> = ({
                 className="w-full inline-flex items-center justify-center gap-2 bg-cream-100 hover:bg-cream-200 text-forest-950 font-bold py-2.5 rounded-xl text-xs border border-cream-300 shadow-2xs"
               >
                 <FileText className="w-4 h-4 text-forest-700" />
-                <span>Orders &amp; Tracking (آرڈرز ریکارڈ)</span>
+                <span>Orders &amp; Tracking (کسٹمر آرڈرز)</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setIsMobileMenuOpen(false)
+                  onNavigateToAdmin?.()
+                }}
+                className="w-full inline-flex items-center justify-center gap-2 bg-amber-100 hover:bg-amber-200 text-forest-950 font-bold py-2.5 rounded-xl text-xs border border-amber-300 shadow-2xs"
+              >
+                <ShieldCheck className="w-4 h-4 text-amber-700" />
+                <span>Admin Portal (ایڈمن پینل)</span>
               </button>
 
               <a

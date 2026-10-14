@@ -975,7 +975,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
                 <span>Sample Mandi Price Notice (عارضی نرخ):</span>
               </div>
               <p className="text-amber-900/80">
-                All prices are sample retail estimates in PKR based on local market rates. Hafiz Jee owner verifies exact daily rates upon packing at {STORE_INFO.address}.
+                All prices are sample retail estimates in PKR based on local market rates. {STORE_INFO.name} owner verifies exact daily rates upon packing at {STORE_INFO.address}.
               </p>
             </div>
 
@@ -1021,7 +1021,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({
               <span>Browser-Local Data Security Notice:</span>
             </div>
             <p className="text-[11px] text-forest-700/80 leading-relaxed">
-              Your details are stored locally on your device (LocalStorage) and sent directly to Hafiz Jee via WhatsApp. No remote database or third-party server tracks your basket. Final payment is made on delivery or collection.
+              Your details are stored locally on your device (LocalStorage) and sent directly to {STORE_INFO.name} via WhatsApp. No remote database or third-party server tracks your basket. Final payment is made on delivery or collection.
             </p>
           </div>
         </div>

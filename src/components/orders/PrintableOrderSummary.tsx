@@ -300,13 +300,13 @@ export const PrintableOrderSummary: React.FC<PrintableOrderSummaryProps> = ({
               <div className="p-2.5 rounded-xl bg-amber-50 border border-amber-200 text-[11px] text-amber-950 leading-relaxed print:bg-white print:border-black">
                 <p className="font-bold">Mandi Rate Notice (عارضی نرخ):</p>
                 <p className="text-[10px] text-amber-900/80 print:text-black">
-                  All retail prices are sample estimates in PKR subject to daily mandi rate verification by Hafiz Jee owner upon delivery/collection at {STORE_INFO.address}.
+                  All retail prices are estimates in PKR subject to daily verification by {STORE_INFO.name} owner upon delivery/collection at {STORE_INFO.address}.
                 </p>
               </div>
 
               <div className="flex items-center gap-2 text-[11px] text-forest-800 print:text-black">
                 <ShieldCheck className="w-4 h-4 text-forest-700 print:hidden" />
-                <span>100% Khális Quality • Thank you for shopping with Hafiz Jee!</span>
+                <span>100% Khális Quality • Thank you for shopping with {STORE_INFO.name}!</span>
               </div>
             </div>
 

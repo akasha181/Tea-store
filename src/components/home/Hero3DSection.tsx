@@ -54,23 +54,26 @@ export const Hero3DSection: React.FC<Hero3DSectionProps> = ({ onExploreClick }) 
           {/* Heading */}
           <div className="space-y-2">
             <h1 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-black tracking-tight text-white leading-[1.18]">
-              آپ کے گھر کا مکمل کریانہ <br />
-              <span className="text-lime-brand">تھوک منڈی کے نرخوں پر</span>
+              آپ کے گھر تک سامان <br />
+              <span className="text-lime-brand">ہماری ذمہ داری</span>
             </h1>
-            <p className="text-base sm:text-lg lg:text-xl font-bold text-cream-200 font-urdu pt-1">
-              حافظ جی کریانہ سٹور — خالص چکی آٹا، دالیں، چاول اور گھی
+            <p className="text-xs sm:text-sm font-semibold text-lime-brand/95 tracking-wide">
+              Ap Ka Ghar Tak Saman Hamari Zimadari • خالص چائے و معیاری سودا سلف
+            </p>
+            <p className="text-base sm:text-lg lg:text-xl font-bold text-cream-200 font-urdu pt-0.5">
+              حافظ جی چائے اور کریانہ سٹور — خالص چائے، چکی آٹا، دالیں اور گھی
             </p>
           </div>
 
           {/* Description */}
           <p className="text-xs sm:text-sm lg:text-base text-cream-200/85 leading-relaxed max-w-xl">
-            Serving our neighborhood with 100% unadulterated kitchen essentials. Cleaned pulses, aged basmati rice, freshly ground whole wheat, and brand ghee delivered to your doorstep within 30–45 minutes.
+            Serving our neighborhood with 100% unadulterated kitchen essentials. Premium Danedar tea, cleaned pulses, aged basmati rice, freshly ground whole wheat, and brand ghee delivered to your doorstep within 30–45 minutes.
           </p>
 
           {/* Call to Actions */}
           <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 pt-2">
             <a
-              href={`https://wa.me/${STORE_INFO.whatsapp}?text=Assalam-o-Alaikum%20Hafiz%20Jee,%20I%20want%20to%20order%20groceries%20from%20G%20Civil%20Bazaar,%20K-152`}
+              href={`https://wa.me/${STORE_INFO.whatsapp}?text=Assalam-o-Alaikum%20Hafiz%20G,%20I%20want%20to%20order%20groceries%20from%20G%20Civil%20Bazaar,%20K-152`}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-lime-brand hover:bg-lime-accent active:bg-lime-dark text-forest-950 font-bold px-5 py-3.5 rounded-xl text-xs sm:text-sm shadow-sm transition-all cursor-pointer motion-reduce:transition-none"

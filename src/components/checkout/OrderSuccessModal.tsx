@@ -70,7 +70,7 @@ export const OrderSuccessModal: React.FC<OrderSuccessModalProps> = ({
             آپ کا آرڈر واٹس ایپ کے لیے تیار ہو گیا ہے!
           </p>
           <p className="text-xs text-forest-700/80 max-w-sm mx-auto">
-            Hafiz Jee Kiryana Store will review your order details, verify market mandi rates, and confirm packaging immediately.
+            {STORE_INFO.name} will review your order details, verify market mandi rates, and confirm packaging immediately.
           </p>
         </div>
 

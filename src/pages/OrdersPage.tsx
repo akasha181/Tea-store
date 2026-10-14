@@ -213,7 +213,7 @@ export const OrdersPage: React.FC<OrdersPageProps> = ({
         : cleanPhone
 
     const text = encodeURIComponent(
-      `Assalam-o-Alaikum ${order.customer.fullName}!\nRegarding your Hafiz Jee Kiryana Store order *${order.orderId}*:\nYour order ${statusText}.\nTotal: Rs. ${order.totalAmount.toLocaleString()} (${order.customer.deliveryMethod === 'pickup' ? 'Store Pickup' : 'Home Delivery'}).\nStore Address: ${STORE_INFO.address}\nHelpline: ${STORE_INFO.phone}. JazakAllah!`
+      `Assalam-o-Alaikum ${order.customer.fullName}!\nRegarding your ${STORE_INFO.name} order *${order.orderId}*:\nYour order ${statusText}.\nTotal: Rs. ${order.totalAmount.toLocaleString()} (${order.customer.deliveryMethod === 'pickup' ? 'Store Pickup' : 'Home Delivery'}).\nStore Address: ${STORE_INFO.address}\nHelpline: ${STORE_INFO.phone}. JazakAllah!`
     )
 
     return `https://wa.me/${targetNumber}?text=${text}`
@@ -879,12 +879,12 @@ export const OrdersPage: React.FC<OrdersPageProps> = ({
                   <div>
                     <strong>Status Note:</strong>{' '}
                     {selectedTrackedOrder.status === 'completed'
-                      ? 'This order has been delivered and fulfilled. Thank you for choosing Hafiz Jee!'
+                      ? `This order has been delivered and fulfilled. Thank you for choosing ${STORE_INFO.name}!`
                       : selectedTrackedOrder.status === 'confirmed'
-                        ? 'Hafiz Jee has verified your order. Your items are being packed at G Civil Bazaar, K-152.'
+                        ? `The store has verified your order. Your items are being packed at ${STORE_INFO.address}.`
                         : selectedTrackedOrder.status === 'cancelled'
                           ? 'This order is marked as cancelled.'
-                          : 'Order placed via WhatsApp. Hafiz Jee store owner is reviewing mandi rates and stock.'}
+                          : `Order placed via WhatsApp. ${STORE_INFO.name} store owner is reviewing mandi rates and stock.`}
                   </div>
                 </div>
               </div>
@@ -931,7 +931,7 @@ export const OrdersPage: React.FC<OrdersPageProps> = ({
 
                 <a
                   href={`https://wa.me/${STORE_INFO.whatsapp}?text=${encodeURIComponent(
-                    `Assalam-o-Alaikum Hafiz Jee, I am checking the status of my order ${selectedTrackedOrder.orderId}.`
+                    `Assalam-o-Alaikum Hafiz G, I am checking the status of my order ${selectedTrackedOrder.orderId}.`
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -948,7 +948,7 @@ export const OrdersPage: React.FC<OrdersPageProps> = ({
                 No local order found for "{trackingIdInput}"
               </p>
               <p className="text-xs text-forest-700/70">
-                Please check your order reference number or contact Hafiz Jee at {STORE_INFO.phone}.
+                Please check your order reference number or contact store helpline at {STORE_INFO.phone}.
               </p>
             </Card>
           ) : null}

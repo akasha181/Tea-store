@@ -6,6 +6,9 @@ export interface ProductCatalogContextType {
   updateProductPrice: (id: string, newPrice: number) => void
   toggleProductStock: (id: string) => void
   updateProductStockQuantity: (id: string, newQuantity: number) => void
+  addProduct: (product: Omit<Product, 'id'> & { id?: string }) => Product
+  updateProduct: (id: string, updates: Partial<Product>) => void
+  deleteProduct: (id: string) => void
   resetToDefaultCatalog: () => void
 }
 

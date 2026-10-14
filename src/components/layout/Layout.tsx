@@ -12,12 +12,13 @@ export interface LayoutProps {
   cartItems?: CartItem[]
   searchQuery: string
   selectedCategory: string
-  currentPage?: 'home' | 'checkout' | 'orders'
+  currentPage?: 'home' | 'checkout' | 'orders' | 'admin'
   onSearchChange: (query: string) => void
   onCategorySelect: (categoryId: string) => void
   onNavigateHome?: () => void
   onNavigateToCheckout?: () => void
   onNavigateToOrders?: () => void
+  onNavigateToAdmin?: () => void
   onUpdateQuantity?: (productId: string, newQuantity: number) => void
   onRemoveItem?: (productId: string) => void
   onClearCart?: () => void
@@ -33,6 +34,7 @@ export const Layout: React.FC<LayoutProps> = ({
   onNavigateHome,
   onNavigateToCheckout,
   onNavigateToOrders,
+  onNavigateToAdmin,
 }) => {
   const { totalCount, openCart } = useCart()
   const [activeMobileTab, setActiveMobileTab] = useState('home')
@@ -72,6 +74,7 @@ export const Layout: React.FC<LayoutProps> = ({
         onCartClick={openCart}
         onLogoClick={onNavigateHome}
         onNavigateToOrders={onNavigateToOrders}
+        onNavigateToAdmin={onNavigateToAdmin}
       />
 
       {/* Main Content Area with responsive padding */}
