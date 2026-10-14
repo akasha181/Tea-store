@@ -1079,7 +1079,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigateHome, onNavigate
 
               <div>
                 <label className="block text-xs font-bold text-forest-950 mb-1">
-                  WhatsApp Ordering Number (بین الاقوامی فارمیٹ e.g. 923001234567)
+                  WhatsApp Ordering Number (بین الاقوامی فارمیٹ e.g. 923121971001)
                 </label>
                 <input
                   type="text"

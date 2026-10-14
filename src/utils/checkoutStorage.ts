@@ -241,7 +241,7 @@ export function seedSampleOrdersIfEmpty(): OrderRecord[] {
       totalAmount: 3160,
       isFreeDelivery: true,
       status: 'pending',
-      whatsappLink: 'https://wa.me/923001234567',
+      whatsappLink: 'https://wa.me/923121971001',
       ownerNotes: 'Rider assigned: Imran',
     },
     {
@@ -290,7 +290,7 @@ export function seedSampleOrdersIfEmpty(): OrderRecord[] {
       totalAmount: 4600,
       isFreeDelivery: true,
       status: 'confirmed',
-      whatsappLink: 'https://wa.me/923001234567',
+      whatsappLink: 'https://wa.me/923121971001',
       ownerNotes: 'Packed and kept at counter A-2',
     },
     {
@@ -339,7 +339,7 @@ export function seedSampleOrdersIfEmpty(): OrderRecord[] {
       totalAmount: 3150,
       isFreeDelivery: true,
       status: 'completed',
-      whatsappLink: 'https://wa.me/923001234567',
+      whatsappLink: 'https://wa.me/923121971001',
       ownerNotes: 'Payment received in cash. Order closed.',
     },
   ]
@@ -365,10 +365,17 @@ export function loadStoreSettings(): StoreInfo {
     if (!raw) return STORE_INFO
     const parsed = JSON.parse(raw)
     if (!parsed || typeof parsed !== 'object') return STORE_INFO
-    return {
+    const merged: StoreInfo = {
       ...STORE_INFO,
       ...parsed,
     }
+    if (merged.whatsapp === '923001234567') {
+      merged.whatsapp = STORE_INFO.whatsapp
+    }
+    if (merged.phone === '0300-1234567') {
+      merged.phone = STORE_INFO.phone
+    }
+    return merged
   } catch {
     return STORE_INFO
   }

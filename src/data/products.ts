@@ -5,8 +5,8 @@ export const STORE_INFO: StoreInfo = {
   urduName: 'حافظ جی چائے اور کریانہ سٹور',
   tagline: 'خالص چائے اور معیاری کریانہ • آپ کے گھر تک سامان ہماری ذمہ داری',
   address: 'G Civil Bazaar, K-152',
-  phone: (import.meta.env?.VITE_STORE_PHONE as string) || '0300-1234567',
-  whatsapp: (import.meta.env?.VITE_STORE_WHATSAPP as string) || '923001234567',
+  phone: (import.meta.env?.VITE_STORE_PHONE as string) || '0312-1971001',
+  whatsapp: (import.meta.env?.VITE_STORE_WHATSAPP as string) || '923121971001',
   timing: '8:00 AM – 11:00 PM (Daily)',
   deliveryNotice: 'Free 30–45 Mins Local Delivery on Orders over Rs. 1,000',
   samplePriceDisclaimer:
